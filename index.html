@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terminal ???? ????</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" type="images/x-icon" href="/images/x-icon.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal ARG</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="images/x-icon.ico">
 </head>
+
 <body>
 
   <!-- ======================================================
        MODAL DE PRIMEIRA VISITA
-       ====================================================== -->
+  ====================================================== -->
   <div id="onboarding-modal" class="hidden">
     <div class="modal-box">
       <h2>IDENTIFICAÇÃO REQUERIDA</h2>
@@ -32,19 +34,18 @@
   </div>
 
   <!-- ======================================================
-       SEQUÊNCIA DE ARRANQUE (boot)
-       ====================================================== -->
+       SEQUÊNCIA DE ARRANQUE
+  ====================================================== -->
   <div id="boot-screen" class="hidden">
     <div id="boot-lines"></div>
   </div>
 
   <!-- ======================================================
        ECRÃ PRINCIPAL
-       ====================================================== -->
+  ====================================================== -->
   <div id="main-screen" class="hidden-init">
 
-    <!-- nós escondidos espalhados pelo ecrã — muda o href e o texto
-         quando tiveres as páginas/pistas definidas -->
+    <!-- Nós escondidos (pistas do ARG) -->
     <a href="locations/loc1.html" class="hidden-node node-1" title="???">·</a>
     <a href="locations/loc2.html" class="hidden-node node-2" title="???">·</a>
     <a href="locations/loc3.html" class="hidden-node node-3" title="???">·</a>
@@ -65,24 +66,21 @@
     </div>
 
     <div id="key-response"></div>
+
+    <!-- ======================================================
+         STATUS DO TERMINAL
+    ====================================================== -->
     <div id="terminal-status">
-
-    <div id="status-user"></div>
-
-    <div id="status-music">
-      <div id="terminal-status">
-
-          <div id="status-user"></div>
-          <div id="status-status"></div>
-          <div id="status-track"></div>
-          <div id="status-uptime"></div>
-
-      </div>
+      <div id="status-user"></div>
+      <div id="status-status"></div>
+      <div id="status-track"></div>
+      <div id="status-uptime"></div>
     </div>
 
-</div>
   </div>
-  <script src="script.js"></script>
+
   <div id="fade-screen"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>

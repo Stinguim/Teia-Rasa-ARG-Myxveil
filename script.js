@@ -1,95 +1,45 @@
 /* =========================================================
-   ARG TERMINAL — script.js
+   ARG TERMINAL — script.js (Refactor)
    ========================================================= */
 
 /* ---------------------------------------------------------
-   CONFIGURAÇÃO — edita aqui à medida que criares o ARG
-   --------------------------------------------------------- */
+   CONFIGURAÇÃO
+--------------------------------------------------------- */
+
+const CURRENT_TRACK = "caffeine withdrawal";
+const MIN_KEY_LENGTH = 10;
 
 let cursorVisible = true;
 let inputFocused = false;
-let cursorInterval = null;
 let uptimeSeconds = 0;
+let cursorInterval = null;
 
-const CURRENT_TRACK = "caffeine withdrawal";
+/* ---------------------------------------------------------
+   ELEMENTOS
+--------------------------------------------------------- */
 
-let terminalIcon;
-let statusUser;
-let statusStatus;
-let statusTrack;
-let statusUptime;
-// Mensagens da sequência de arranque (podes reescrever livremente)
-const BOOT_LINES = [
+const onboardingModal = document.getElementById("onboarding-modal");
+const onboardingForm = document.getElementById("onboarding-form");
+const onboardingError = document.getElementById("onboarding-error");
 
-"ARG OS v2.7.14",
-"",
-"INICIANDO SISTEMA...",
-"",
-"[■■□□□□□□□□] 15%",
-"[■■■■□□□□□□] 32%",
-"[■■■■■■□□□□] 54%",
-"[■■■■■■■■□□] 81%",
-"[■■■■■■■■■■] 100%",
-"",
-"Inicialização concluída.",
-"",
-"A carregar módulos de autenticação...",
-"✔ crypto.dll",
-"✔ archive.sys",
-"✔ gateway.node",
-"✔ user.db",
-"",
-"A sincronizar relógio do sistema...",
-"OK",
-"",
-"A verificar permissões...",
-"Permissões válidas.",
-"",
-"A montar sistema de ficheiros...",
-"OK",
-"",
-"A estabelecer ligação encriptada...",
-"",
-"[##########] 100%",
-"",
-"Nenhuma corrupção encontrada.",
-"",
-"Bem-vindo ao terminal seguro.",
-"",
-"Acesso: NÍVEL 0",
-"",
-"A aguardar autenticação..."
-];
+const bootScreen = document.getElementById("boot-screen");
+const bootLinesEl = document.getElementById("boot-lines");
 
-// Comprimento mínimo do campo de chave (nº de underscores visíveis
-// quando o campo está vazio). O campo cresce automaticamente se o
-// utilizador escrever mais do que isto.
-const MIN_KEY_LENGTH = 10;
+const mainScreen = document.getElementById("main-screen");
+const promptLabel = document.getElementById("prompt-label");
 
-// Mapa de chaves -> resposta mostrada ao utilizador.
-// Adiciona aqui uma entrada por cada chave que espalhares pelo ARG.
-// A comparação não é sensível a maiúsculas/minúsculas nem a espaços extra.
-const KEYS = {
-  "ECHO9": {
-    ok: true,
-    message: "CHAVE ACEITE. Acesso concedido a: SETOR 1.",
-  },
-  "NULLPOINT": {
-    ok: true,
-    message: "CHAVE ACEITE. Novo registo desbloqueado.",
-  },
-  // exemplo de chave "quase certa" para dar uma pista em vez de erro genérico:
-  "ECHO": {
-    ok: false,
-    message: "Chave incompleta. Falta algo.",
-  },
-  "REMEMBER THIS": {
-    ok: true,
-    message: "Lembraste-te. Mas não o suficiente. Continua a procurar.",
-},
-};
+const keyDisplay = document.getElementById("key-display");
+const keyRealInput = document.getElementById("key-real-input");
+const keyResponse = document.getElementById("key-response");
 
-const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
+const terminalIcon = document.querySelector(".terminal-icon");
+const fadeScreen = document.getElementById("fade-screen");
+
+const statusUser = document.getElementById("status-user");
+const statusStatus = document.getElementById("status-status");
+const statusTrack = document.getElementById("status-track");
+const statusUptime = document.getElementById("status-uptime");
+
 /* ---------------------------------------------------------
    ÁUDIO
 --------------------------------------------------------- */
@@ -102,44 +52,85 @@ const errorSound = new Audio("audio/error.ogg");
 errorSound.volume = 0.7;
 
 /* ---------------------------------------------------------
-   ELEMENTOS
-   --------------------------------------------------------- */
-const onboardingModal = document.getElementById("onboarding-modal");
-const onboardingForm = document.getElementById("onboarding-form");
-const onboardingError = document.getElementById("onboarding-error");
-const bootScreen = document.getElementById("boot-screen");
-const bootLinesEl = document.getElementById("boot-lines");
-const mainScreen = document.getElementById("main-screen");
-const promptLabel = document.getElementById("prompt-label");
-const keyDisplay = document.getElementById("key-display");
-const keyRealInput = document.getElementById("key-real-input");
-const keyResponse = document.getElementById("key-response");
+   BOOT SEQUENCE
+--------------------------------------------------------- */
+
+const BOOT_LINES = [
+  "ARG OS v2.7.14",
+  "",
+  "INICIANDO SISTEMA...",
+  "",
+  "[■■□□□□□□□□] 15%",
+  "[■■■■□□□□□□] 32%",
+  "[■■■■■■□□□□] 54%",
+  "[■■■■■■■■□□] 81%",
+  "[■■■■■■■■■■] 100%",
+  "",
+  "Inicialização concluída.",
+  "",
+  "A carregar módulos de autenticação...",
+  "✔ crypto.dll",
+  "✔ archive.sys",
+  "✔ gateway.node",
+  "✔ user.db",
+  "",
+  "A sincronizar relógio do sistema...",
+  "OK",
+  "",
+  "A verificar permissões...",
+  "Permissões válidas.",
+  "",
+  "A montar sistema de ficheiros...",
+  "OK",
+  "",
+  "A estabelecer ligação encriptada...",
+  "",
+  "[##########] 100%",
+  "",
+  "Nenhuma corrupção encontrada.",
+  "",
+  "Bem-vindo ao terminal seguro.",
+  "",
+  "Acesso: NÍVEL 0",
+  "",
+  "A aguardar autenticação..."
+];
 
 /* ---------------------------------------------------------
-   ARRANQUE GERAL
-   --------------------------------------------------------- */
+   CHAVES
+--------------------------------------------------------- */
+
+const KEYS = {
+  "ECHO9": { ok: true, message: "CHAVE ACEITE. Acesso concedido a: SETOR 1." },
+  "NULLPOINT": { ok: true, message: "CHAVE ACEITE. Novo registo desbloqueado." },
+  "ECHO": { ok: false, message: "Chave incompleta. Falta algo." },
+  "REMEMBER THIS": { ok: true, message: "Lembraste-te. Mas não o suficiente. Continua a procurar." }
+};
+
+const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
+
+/* ---------------------------------------------------------
+   ARRANQUE
+--------------------------------------------------------- */
+
 document.addEventListener("DOMContentLoaded", () => {
   const username = localStorage.getItem("arg_username");
-  terminalIcon = document.querySelector(".terminal-icon");
-
-  statusUser = document.getElementById("status-user");
-  statusStatus = document.getElementById("status-status");
-  statusTrack = document.getElementById("status-track");
-  statusUptime = document.getElementById("status-uptime");
 
   if (!username) {
     onboardingModal.classList.remove("hidden");
   } else {
-    promptLabel.textContent = `INSIRA A CHAVE DE ACESSO`;
+    promptLabel.textContent = "INSIRA A CHAVE DE ACESSO";
     startBoot(username);
   }
 });
 
 /* ---------------------------------------------------------
-   MODAL DE ONBOARDING
-   --------------------------------------------------------- */
+   ONBOARDING
+--------------------------------------------------------- */
+
 onboardingForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
   const realName = document.getElementById("real-name").value.trim();
   const username = document.getElementById("username").value.trim();
 
@@ -156,23 +147,22 @@ onboardingForm.addEventListener("submit", (e) => {
 });
 
 /* ---------------------------------------------------------
-   SEQUÊNCIA DE ARRANQUE
-   --------------------------------------------------------- */
+   BOOT SEQUENCE
+--------------------------------------------------------- */
+
 function startBoot(username) {
   bootScreen.classList.remove("hidden");
   bootLinesEl.textContent = "";
 
   const lines = [...BOOT_LINES, `Utilizador reconhecido: ${username}`];
-
   let i = 0;
+
   function nextLine() {
     if (i < lines.length) {
       bootLinesEl.textContent += lines[i] + "\n";
       i++;
-      // velocidade um pouco irregular, para parecer mais "real"
       setTimeout(nextLine, 90 + Math.random() * 160);
     } else {
-      // pequena pausa antes de apagar tudo e ficar em ecrã preto
       setTimeout(() => {
         bootScreen.classList.add("hidden");
         bootScreen.style.display = "none";
@@ -180,70 +170,24 @@ function startBoot(username) {
       }, 500);
     }
   }
+
   nextLine();
 }
 
-function updateUptime(){
-
-    const h = Math.floor(uptimeSeconds / 3600);
-    const m = Math.floor((uptimeSeconds % 3600) / 60);
-    const s = uptimeSeconds % 60;
-
-    statusUptime.textContent =
-        `UPTIME : ${
-            String(h).padStart(2,"0")
-        }:${
-            String(m).padStart(2,"0")
-        }:${
-            String(s).padStart(2,"0")
-        }`;
-
-}
+/* ---------------------------------------------------------
+   MAIN SCREEN
+--------------------------------------------------------- */
 
 function showMainScreen() {
   mainScreen.classList.remove("hidden-init");
-
-  requestAnimationFrame(() => {
-    mainScreen.classList.add("visible");
-  });
+  requestAnimationFrame(() => mainScreen.classList.add("visible"));
 
   renderKeyDisplay("");
   keyRealInput.focus();
 
-  // inicia música
-  backgroundMusic.volume = 0;
-  backgroundMusic.play().catch(() => {});
+  fadeInMusic();
+  animateIcon();
 
-  let volume = 0;
-
-  const fade = setInterval(() => {
-      volume += 0.02;
-
-      if (volume >= 0.35) {
-          volume = 0.35;
-          clearInterval(fade);
-      }
-
-      backgroundMusic.volume = volume;
-  }, 100);
-
-  terminalIcon.animate([
-      {
-          transform:"scale(.85)",
-          opacity:0
-      },
-      {
-          transform:"scale(1.05)",
-          opacity:1
-      },
-      {
-          transform:"scale(1)",
-          opacity:1
-      }
-  ],{
-      duration:650,
-      easing:"ease-out"
-  });
   const username = localStorage.getItem("arg_username") || "UNKNOWN";
 
   statusUser.textContent = `USER : ${username}`;
@@ -251,17 +195,52 @@ function showMainScreen() {
   statusTrack.textContent = `TRACK : ${CURRENT_TRACK}`;
 
   updateUptime();
-
   setInterval(() => {
-      uptimeSeconds++;
-      updateUptime();
-  },1000);
-  
+    uptimeSeconds++;
+    updateUptime();
+  }, 1000);
+}
+
+function fadeInMusic() {
+  backgroundMusic.volume = 0;
+  backgroundMusic.play().catch(() => {});
+
+  let volume = 0;
+  const fade = setInterval(() => {
+    volume = Math.min(volume + 0.02, 0.35);
+    backgroundMusic.volume = volume;
+
+    if (volume >= 0.35) clearInterval(fade);
+  }, 100);
+}
+
+function animateIcon() {
+  setInterval(() => {
+    terminalIcon.style.transform =
+      `translate(${Math.random() * 2 - 1}px, ${Math.random() * 2 - 1}px)`;
+
+    setTimeout(() => {
+      terminalIcon.style.transform = "";
+    }, 40);
+  }, 7000 + Math.random() * 6000);
 }
 
 /* ---------------------------------------------------------
-   CAMPO DA CHAVE (underscores dinâmicos)
-   --------------------------------------------------------- */
+   UPTIME
+--------------------------------------------------------- */
+
+function updateUptime() {
+  const h = String(Math.floor(uptimeSeconds / 3600)).padStart(2, "0");
+  const m = String(Math.floor((uptimeSeconds % 3600) / 60)).padStart(2, "0");
+  const s = String(uptimeSeconds % 60).padStart(2, "0");
+
+  statusUptime.textContent = `UPTIME : ${h}:${m}:${s}`;
+}
+
+/* ---------------------------------------------------------
+   INPUT DA CHAVE
+--------------------------------------------------------- */
+
 mainScreen.addEventListener("click", () => keyRealInput.focus());
 
 keyRealInput.addEventListener("input", () => {
@@ -269,42 +248,38 @@ keyRealInput.addEventListener("input", () => {
 });
 
 keyRealInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    checkKey(keyRealInput.value);
-  }
+  if (e.key === "Enter") checkKey(keyRealInput.value);
 });
 
+keyRealInput.addEventListener("focus", () => {
+  inputFocused = true;
+  renderKeyDisplay(keyRealInput.value);
+});
+
+keyRealInput.addEventListener("blur", () => {
+  inputFocused = false;
+  renderKeyDisplay(keyRealInput.value);
+});
+
+/* ---------------------------------------------------------
+   RENDER DO CAMPO
+--------------------------------------------------------- */
+
 function renderKeyDisplay(value) {
+  const escaped = [...value].map(escapeHtml).join("");
+  const cursor = inputFocused && (value.length > 0 || cursorVisible)
+    ? '<span class="placeholder-char">|</span>'
+    : "";
 
-    let html = "";
-
-    for (let i = 0; i < value.length; i++) {
-        html += escapeHtml(value[i]);
-    }
-
-    if (inputFocused) {
-
-        if (value.length > 0) {
-            html += '<span class="placeholder-char">|</span>';
-        }
-        else if (cursorVisible) {
-            html += '<span class="placeholder-char">|</span>';
-        }
-
-    }
-
-    keyDisplay.innerHTML = html;
+  keyDisplay.innerHTML = escaped + cursor;
 }
 
 cursorInterval = setInterval(() => {
-
-    if (inputFocused && keyRealInput.value.length === 0) {
-
-        cursorVisible = !cursorVisible;
-        renderKeyDisplay("");
-
-    }
-},500);
+  if (inputFocused && keyRealInput.value.length === 0) {
+    cursorVisible = !cursorVisible;
+    renderKeyDisplay("");
+  }
+}, 500);
 
 function escapeHtml(str) {
   const div = document.createElement("div");
@@ -314,89 +289,45 @@ function escapeHtml(str) {
 
 /* ---------------------------------------------------------
    VALIDAÇÃO DA CHAVE
-   --------------------------------------------------------- */
-function checkKey(rawValue){
+--------------------------------------------------------- */
 
-    const value = rawValue.trim().toUpperCase();
+function checkKey(rawValue) {
+  const value = rawValue.trim().toUpperCase();
 
-    if(!value){
-        setResponse(DEFAULT_ERROR,false);
-        return;
-    }
+  if (!value) {
+    setResponse(DEFAULT_ERROR, false);
+    return;
+  }
 
-    const entry = KEYS[value];
-
-    if(entry){
-        setResponse(entry.message,entry.ok,value);
-    }
-    else{
-        setResponse(DEFAULT_ERROR,false);
-    }
-
+  const entry = KEYS[value];
+  entry
+    ? setResponse(entry.message, entry.ok, value)
+    : setResponse(DEFAULT_ERROR, false);
 }
 
 function setResponse(message, ok, key = "") {
+  keyResponse.textContent = message;
+  keyResponse.classList.toggle("ok", ok);
+  keyResponse.classList.toggle("err", !ok);
 
-    keyResponse.textContent = message;
+  if (!ok) {
+    errorSound.currentTime = 0;
+    errorSound.play();
+    return;
+  }
 
-    keyResponse.classList.remove("ok","err");
-    keyResponse.classList.add(ok ? "ok" : "err");
-
-    if(!ok){
-
-        errorSound.currentTime = 0;
-        errorSound.play();
-        return;
-
-    }
-
-    // Apenas esta password muda de página
-    if(key === "REMEMBER THIS"){
-
-        setTimeout(()=>{
-
-            fadeTo("locations/loc1.html");
-
-        },1500);
-
-    }
-
+  if (key === "REMEMBER THIS") {
+    setTimeout(() => fadeTo("locations/loc1.html"), 1500);
+  }
 }
 
-setInterval(() => {
+/* ---------------------------------------------------------
+   FADE
+--------------------------------------------------------- */
 
-    if (!terminalIcon) return;
-
-    terminalIcon.style.transform =
-        `translate(${Math.random()*2-1}px, ${Math.random()*2-1}px)`;
-
-    setTimeout(() => {
-        terminalIcon.style.transform = "";
-    }, 40);
-
-}, 7000 + Math.random()*6000);
-
-//  ver se o mouse ta selecionado
-keyRealInput.addEventListener("focus", () => {
-    inputFocused = true;
-    renderKeyDisplay(keyRealInput.value);
-});
-
-keyRealInput.addEventListener("blur", () => {
-    inputFocused = false;
-    renderKeyDisplay(keyRealInput.value);
-});
-
-const fadeScreen = document.getElementById("fade-screen");
-
-function fadeTo(page){
-
-    fadeScreen.classList.add("active");
-
-    setTimeout(()=>{
-
-        window.location.href = page;
-
-    },800);
-
+function fadeTo(page) {
+  fadeScreen.classList.add("active");
+  setTimeout(() => {
+    window.location.href = page;
+  }, 800);
 }
