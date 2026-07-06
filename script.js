@@ -6,12 +6,18 @@
    CONFIGURAÇÃO — edita aqui à medida que criares o ARG
    --------------------------------------------------------- */
 
-// Permitir alterar o cursor
 let cursorVisible = true;
-// mini glitch no icon
-const terminalIcon = document.querySelector(".terminal-icon");
-// verificar se o mouse ta ligado
 let inputFocused = false;
+let cursorInterval = null;
+let uptimeSeconds = 0;
+
+const CURRENT_TRACK = "caffeine withdrawal";
+
+let terminalIcon;
+let statusUser;
+let statusStatus;
+let statusTrack;
+let statusUptime;
 // Mensagens da sequência de arranque (podes reescrever livremente)
 const BOOT_LINES = [
 
@@ -114,6 +120,12 @@ const keyResponse = document.getElementById("key-response");
    --------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const username = localStorage.getItem("arg_username");
+  terminalIcon = document.querySelector(".terminal-icon");
+
+  statusUser = document.getElementById("status-user");
+  statusStatus = document.getElementById("status-status");
+  statusTrack = document.getElementById("status-track");
+  statusUptime = document.getElementById("status-uptime");
 
   if (!username) {
     onboardingModal.classList.remove("hidden");
@@ -171,6 +183,23 @@ function startBoot(username) {
   nextLine();
 }
 
+function updateUptime(){
+
+    const h = Math.floor(uptimeSeconds / 3600);
+    const m = Math.floor((uptimeSeconds % 3600) / 60);
+    const s = uptimeSeconds % 60;
+
+    statusUptime.textContent =
+        `UPTIME : ${
+            String(h).padStart(2,"0")
+        }:${
+            String(m).padStart(2,"0")
+        }:${
+            String(s).padStart(2,"0")
+        }`;
+
+}
+
 function showMainScreen() {
   mainScreen.classList.remove("hidden-init");
 
@@ -215,6 +244,19 @@ function showMainScreen() {
       duration:650,
       easing:"ease-out"
   });
+  const username = localStorage.getItem("arg_username") || "UNKNOWN";
+
+  statusUser.textContent = `USER : ${username}`;
+  statusStatus.textContent = "STATUS : ONLINE";
+  statusTrack.textContent = `TRACK : ${CURRENT_TRACK}`;
+
+  updateUptime();
+
+  setInterval(() => {
+      uptimeSeconds++;
+      updateUptime();
+  },1000);
+  
 }
 
 /* ---------------------------------------------------------
@@ -273,24 +315,27 @@ function escapeHtml(str) {
 /* ---------------------------------------------------------
    VALIDAÇÃO DA CHAVE
    --------------------------------------------------------- */
-function checkKey(rawValue) {
-  const value = rawValue.trim().toUpperCase();
+function checkKey(rawValue){
 
-  if (!value) {
-    setResponse(DEFAULT_ERROR, false);
-    return;
-  }
+    const value = rawValue.trim().toUpperCase();
 
-  const entry = KEYS[value];
+    if(!value){
+        setResponse(DEFAULT_ERROR,false);
+        return;
+    }
 
-  if (entry) {
-    setResponse(entry.message, entry.ok);
-  } else {
-    setResponse(DEFAULT_ERROR, false);
-  }
+    const entry = KEYS[value];
+
+    if(entry){
+        setResponse(entry.message,entry.ok,value);
+    }
+    else{
+        setResponse(DEFAULT_ERROR,false);
+    }
+
 }
 
-function setResponse(message, ok) {
+function setResponse(message, ok, key = "") {
 
     keyResponse.textContent = message;
 
@@ -301,16 +346,18 @@ function setResponse(message, ok) {
 
         errorSound.currentTime = 0;
         errorSound.play();
+        return;
 
     }
 
-    else{
+    // Apenas esta password muda de página
+    if(key === "REMEMBER THIS"){
 
-        setTimeout(() => {
+        setTimeout(()=>{
 
             fadeTo("locations/loc1.html");
 
-        },1200);
+        },1500);
 
     }
 
