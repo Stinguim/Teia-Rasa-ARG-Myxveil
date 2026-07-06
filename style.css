@@ -500,8 +500,8 @@ body::before {
   padding: 6px;
   border: 1px solid var(--green-dim);
   box-shadow: 0 0 18px rgba(51, 255, 102, 0.2);
-  max-width: 600px;
-  width: 90%;
+  max-width: 900px;
+  width: 95%;
 }
 
 .enigma-image {
