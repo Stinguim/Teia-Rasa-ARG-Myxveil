@@ -3,16 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>:: ??? ::</title>
+<title>:: RECUPERAÇÃO DE ACESSO ::</title>
 <link rel="stylesheet" href="../style.css">
+<link rel="icon" type="image/x-icon" href="../images/x-icon.ico">
 </head>
 <body>
-  <div class="location-page">
+
+  <!-- ======================================================
+       SEQUÊNCIA DE BOOT — RECUPERAÇÃO DE PASSWORD
+  ====================================================== -->
+  <div id="loc-boot" class="location-boot">
+    <div id="loc-boot-lines"></div>
+  </div>
+
+  <!-- ======================================================
+       CONTEÚDO PRINCIPAL — ENIGMA
+  ====================================================== -->
+  <div class="location-page hidden-init" id="loc-main">
     <h1>SETOR DESCONHECIDO 1</h1>
-    <p>
-      AQUI SERÁ O PRIMEIRO PUZZLE, EM DESENVOLVIMENTO.
+    <p id="loc-warning">
+      Por motivos de segurança, apenas um fragmento do código de acesso
+      original será exibido. O restante permanece encriptado até que a
+      identidade do requerente seja confirmada.
     </p>
+
+    <div class="enigma-frame">
+      <img src="../images/enigma1.svg" alt="Fragmento de código — primeiro enigma" class="enigma-image">
+    </div>
+
     <a href="../index.html" class="back-link">&larr; voltar ao terminal</a>
   </div>
+
+  <div id="fade-screen"></div>
+
+  <script src="loc1.js"></script>
 </body>
 </html>
