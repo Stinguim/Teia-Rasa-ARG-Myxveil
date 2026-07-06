@@ -201,9 +201,12 @@ body::before {
         drop-shadow(0 0 6px #00ff66)
         drop-shadow(0 0 14px #00ff66);
 
-    animation:
-        iconGlow 2.5s ease-in-out infinite,
-        iconFloat 4s ease-in-out infinite;
+    margin-bottom: 35px;
+  transform: translateY(-18px);
+
+  animation:
+      iconGlow 2.5s ease-in-out infinite,
+      iconFloat 4s ease-in-out infinite;
 }
 
 .prompt-label {
@@ -540,8 +543,8 @@ body::before {
     pointer-events:none;
 
     filter:
-        drop-shadow(0 0 6px #00ff66)
-        drop-shadow(0 0 14px #00ff66);
+      drop-shadow(0 0 3px #00ff66)
+      drop-shadow(0 0 8px #00ff66);
 
     animation:
         iconGlow 2.5s ease-in-out infinite,
@@ -675,6 +678,28 @@ body::before {
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.06); opacity: 0.85; }
+}
+
+@keyframes iconGlow{
+
+    0%{
+        filter:
+        drop-shadow(0 0 3px #00ff66)
+        drop-shadow(0 0 8px #00ff66);
+    }
+
+    50%{
+        filter:
+        drop-shadow(0 0 6px #00ff66)
+        drop-shadow(0 0 14px #00ff66);
+    }
+
+    100%{
+        filter:
+        drop-shadow(0 0 3px #00ff66)
+        drop-shadow(0 0 8px #00ff66);
+    }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

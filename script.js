@@ -160,7 +160,7 @@ function showMainScreen() {
 
       backgroundMusic.volume = volume;
   }, 100);
-  
+
   terminalIcon.animate([
       {
           transform:"scale(.85)",
@@ -202,15 +202,26 @@ function renderKeyDisplay(value) {
         html += escapeHtml(value[i]);
     }
 
-    if (cursorVisible)
+    // Se houver texto, mostra sempre o cursor fixo
+    if (value.length > 0) {
         html += '<span class="placeholder-char">|</span>';
+    }
+    // Se estiver vazio, usa a animação
+    else if (cursorVisible) {
+        html += '<span class="placeholder-char">|</span>';
+    }
 
     keyDisplay.innerHTML = html;
 }
 
-setInterval(() => {
-    cursorVisible = !cursorVisible;
-    renderKeyDisplay(keyRealInput.value);
+cursorInterval = setInterval(() => {
+
+    // Só anima quando o campo está vazio
+    if (keyRealInput.value.length === 0) {
+        cursorVisible = !cursorVisible;
+        renderKeyDisplay("");
+    }
+
 }, 500);
 
 function escapeHtml(str) {
