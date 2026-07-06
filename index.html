@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: ACESSO ::</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======================================================
+       MODAL DE PRIMEIRA VISITA
+       ====================================================== -->
+  <div id="onboarding-modal" class="hidden">
+    <div class="modal-box">
+      <h2>IDENTIFICAÇÃO REQUERIDA</h2>
+      <p>Antes de continuares, o sistema precisa de te registar. Estes dados ficam guardados apenas neste dispositivo.</p>
+
+      <form id="onboarding-form">
+        <label for="real-name">O teu nome (fora do jogo):</label>
+        <input type="text" id="real-name" autocomplete="off" required>
+
+        <label for="username">Nome de utilizador para o ARG:</label>
+        <input type="text" id="username" autocomplete="off" required>
+
+        <div class="modal-error" id="onboarding-error"></div>
+
+        <button type="submit">CONFIRMAR</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       SEQUÊNCIA DE ARRANQUE (boot)
+       ====================================================== -->
+  <div id="boot-screen" class="hidden">
+    <div id="boot-lines"></div>
+  </div>
+
+  <!-- ======================================================
+       ECRÃ PRINCIPAL
+       ====================================================== -->
+  <div id="main-screen" class="hidden-init">
+
+    <!-- nós escondidos espalhados pelo ecrã — muda o href e o texto
+         quando tiveres as páginas/pistas definidas -->
+    <a href="locations/loc1.html" class="hidden-node node-1" title="???">·</a>
+    <a href="locations/loc2.html" class="hidden-node node-2" title="???">·</a>
+    <a href="locations/loc3.html" class="hidden-node node-3" title="???">·</a>
+    <a href="locations/loc1.html" class="hidden-node node-4" title="???">·</a>
+    <a href="locations/loc2.html" class="hidden-node node-5" title="???">·</a>
+
+    <svg class="terminal-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="4" width="56" height="56" fill="none" stroke="#33ff66" stroke-width="2"/>
+      <path d="M14 24 L24 32 L14 40" fill="none" stroke="#33ff66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="30" y1="40" x2="48" y2="40" stroke="#33ff66" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+
+    <div class="prompt-label" id="prompt-label">INSIRA A CHAVE DE ACESSO</div>
+
+    <div class="key-input-wrap">
+      <div id="key-display" aria-hidden="true"></div>
+      <input type="text" id="key-real-input" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div id="key-response"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
