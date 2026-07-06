@@ -6,6 +6,10 @@
    CONFIGURAÇÃO — edita aqui à medida que criares o ARG
    --------------------------------------------------------- */
 
+// Permitir alterar o cursor
+let cursorVisible = true;
+// mini glitch no icon
+const terminalIcon = document.querySelector(".terminal-icon");
 // Mensagens da sequência de arranque (podes reescrever livremente)
 const BOOT_LINES = [
   "INICIANDO SISTEMA...",
@@ -156,6 +160,24 @@ function showMainScreen() {
 
       backgroundMusic.volume = volume;
   }, 100);
+  
+  terminalIcon.animate([
+      {
+          transform:"scale(.85)",
+          opacity:0
+      },
+      {
+          transform:"scale(1.05)",
+          opacity:1
+      },
+      {
+          transform:"scale(1)",
+          opacity:1
+      }
+  ],{
+      duration:650,
+      easing:"ease-out"
+  });
 }
 
 /* ---------------------------------------------------------
@@ -174,19 +196,22 @@ keyRealInput.addEventListener("keydown", (e) => {
 });
 
 function renderKeyDisplay(value) {
-  const visibleLength = Math.max(MIN_KEY_LENGTH, value.length + 1);
-  let html = "";
+    let html = "";
 
-  for (let i = 0; i < visibleLength; i++) {
-    if (i < value.length) {
-      html += escapeHtml(value[i]);
-    } else if (i === value.length) {
-      // Apenas um cursor "_"
-      html += '<span class="placeholder-char">_</span>';
+    for (let i = 0; i < value.length; i++) {
+        html += escapeHtml(value[i]);
     }
-  }
-  keyDisplay.innerHTML = html;
+
+    if (cursorVisible)
+        html += '<span class="placeholder-char">|</span>';
+
+    keyDisplay.innerHTML = html;
 }
+
+setInterval(() => {
+    cursorVisible = !cursorVisible;
+    renderKeyDisplay(keyRealInput.value);
+}, 500);
 
 function escapeHtml(str) {
   const div = document.createElement("div");
@@ -224,3 +249,16 @@ function setResponse(message, ok) {
     errorSound.play();
   }
 }
+
+setInterval(() => {
+
+    if (!terminalIcon) return;
+
+    terminalIcon.style.transform =
+        `translate(${Math.random()*2-1}px, ${Math.random()*2-1}px)`;
+
+    setTimeout(() => {
+        terminalIcon.style.transform = "";
+    }, 40);
+
+}, 7000 + Math.random()*6000);
