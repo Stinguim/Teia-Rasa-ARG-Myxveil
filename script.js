@@ -185,6 +185,14 @@ function fadeToMain() {
 
   setTimeout(() => {
     bootScreen.classList.add("hidden");
+
+    // MOSTRAR O MAIN SCREEN
+    mainScreen.classList.remove("hidden-init");
+
+    // Fade-out do overlay
+    fadeScreen.classList.remove("active");
+
+    // Agora sim, iniciar o main screen
     showMainScreen();
   }, 800);
 }
@@ -194,13 +202,14 @@ function fadeToMain() {
 ========================================================= */
 
 function showMainScreen() {
-  mainScreen.classList.remove("hidden-init");
-  requestAnimationFrame(() => mainScreen.classList.add("visible"));
+  requestAnimationFrame(() => {
+    mainScreen.classList.add("visible");
+  });
 
   renderKeyDisplay("");
   keyRealInput.focus();
 
-  /* Música só toca após interação humana */
+  // Música toca ao clicar no botão PROCEDER
   document.addEventListener("click", () => {
     backgroundMusic.play().catch(() => {});
   }, { once: true });
