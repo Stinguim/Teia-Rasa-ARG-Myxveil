@@ -345,3 +345,17 @@ keyRealInput.addEventListener("blur", () => {
     inputFocused = false;
     renderKeyDisplay(keyRealInput.value);
 });
+
+const fadeScreen = document.getElementById("fade-screen");
+
+function fadeTo(page){
+
+    fadeScreen.classList.add("active");
+
+    setTimeout(()=>{
+
+        window.location.href = page;
+
+    },800);
+
+}
