@@ -43,6 +43,16 @@ const KEYS = {
 };
 
 const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
+/* ---------------------------------------------------------
+   ÁUDIO
+--------------------------------------------------------- */
+
+const backgroundMusic = new Audio("audio/background.ogg");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.35;
+
+const errorSound = new Audio("audio/error.ogg");
+errorSound.volume = 0.7;
 
 /* ---------------------------------------------------------
    ELEMENTOS
@@ -122,12 +132,30 @@ function startBoot(username) {
 
 function showMainScreen() {
   mainScreen.classList.remove("hidden-init");
-  // pequeno delay para garantir a transição de opacidade
+
   requestAnimationFrame(() => {
     mainScreen.classList.add("visible");
   });
+
   renderKeyDisplay("");
   keyRealInput.focus();
+
+  // inicia música
+  backgroundMusic.volume = 0;
+  backgroundMusic.play().catch(() => {});
+
+  let volume = 0;
+
+  const fade = setInterval(() => {
+      volume += 0.02;
+
+      if (volume >= 0.35) {
+          volume = 0.35;
+          clearInterval(fade);
+      }
+
+      backgroundMusic.volume = volume;
+  }, 100);
 }
 
 /* ---------------------------------------------------------
@@ -146,13 +174,14 @@ keyRealInput.addEventListener("keydown", (e) => {
 });
 
 function renderKeyDisplay(value) {
-  const visibleLength = Math.max(MIN_KEY_LENGTH, value.length + 2);
+  const visibleLength = Math.max(MIN_KEY_LENGTH, value.length + 1);
   let html = "";
 
   for (let i = 0; i < visibleLength; i++) {
     if (i < value.length) {
       html += escapeHtml(value[i]);
-    } else {
+    } else if (i === value.length) {
+      // Apenas um cursor "_"
       html += '<span class="placeholder-char">_</span>';
     }
   }
@@ -189,4 +218,9 @@ function setResponse(message, ok) {
   keyResponse.textContent = message;
   keyResponse.classList.remove("ok", "err");
   keyResponse.classList.add(ok ? "ok" : "err");
+
+  if (!ok) {
+    errorSound.currentTime = 0;
+    errorSound.play();
+  }
 }
