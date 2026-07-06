@@ -1,24 +1,18 @@
 /* =========================================================
-   ARG TERMINAL — script.js (Atualizado)
+   ARG TERMINAL — script.js (com temas + sons via config.json)
 ========================================================= */
 
-const CURRENT_TRACK = "caffeine withdrawal";
+let CONFIG = null;
 let cursorVisible = true;
 let inputFocused = false;
 let uptimeSeconds = 0;
 
-const backgroundMusic = new Audio("audio/background.ogg");
-backgroundMusic.loop = true;
-backgroundMusic.volume = 0.35;
-
-const errorSound = new Audio("audio/error.ogg");
-errorSound.volume = 0.7;
+let backgroundMusic;
+let errorSound;
+let clickSound;
+let bootSound;
 
 /* ELEMENTOS */
-const onboardingModal = document.getElementById("onboarding-modal");
-const onboardingForm = document.getElementById("onboarding-form");
-const onboardingError = document.getElementById("onboarding-error");
-
 const bootScreen = document.getElementById("boot-screen");
 const bootLinesEl = document.getElementById("boot-lines");
 
@@ -37,110 +31,65 @@ const statusStatus = document.getElementById("status-status");
 const statusTrack = document.getElementById("status-track");
 const statusUptime = document.getElementById("status-uptime");
 
-/* BOOT LINES */
-const BOOT_LINES = [
-  "ARG OS v2.7.14",
-  "",
-  "INICIANDO SISTEMA...",
-  "",
-  "[■■□□□□□□□□] 15%",
-  "[■■■■□□□□□□] 32%",
-  "[■■■■■■□□□□] 54%",
-  "[■■■■■■■■□□] 81%",
-  "[■■■■■■■■■■] 100%",
-  "",
-  "Inicialização concluída.",
-  "",
-  "A carregar módulos de autenticação...",
-  "✔ crypto.dll",
-  "✔ archive.sys",
-  "✔ gateway.node",
-  "✔ user.db",
-  "",
-  "A sincronizar relógio do sistema...",
-  "OK",
-  "",
-  "A verificar permissões...",
-  "Permissões válidas.",
-  "",
-  "A montar sistema de ficheiros...",
-  "OK",
-  "",
-  "A estabelecer ligação encriptada...",
-  "",
-  "[##########] 100%",
-  "",
-  "Nenhuma corrupção encontrada.",
-  "",
-  "Bem-vindo ao terminal seguro.",
-  "",
-  "Acesso: NÍVEL 0",
-  "",
-  "A aguardar autenticação..."
-];
-
-/* CHAVES */
-const KEYS = {
-  "ECHO9": { ok: true, message: "CHAVE ACEITE. Acesso concedido a: SETOR 1." },
-  "NULLPOINT": { ok: true, message: "CHAVE ACEITE. Novo registo desbloqueado." },
-  "ECHO": { ok: false, message: "Chave incompleta. Falta algo." },
-  "REMEMBER THIS": { ok: true, message: "Lembraste-te. Mas não o suficiente. Continua a procurar." }
-};
-
-const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
-
 /* =========================================================
-   ARRANQUE
+   LOAD CONFIG.JSON
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const username = localStorage.getItem("arg_username");
+document.addEventListener("DOMContentLoaded", async () => {
+  CONFIG = await fetch("config.json").then(r => r.json());
 
-  if (!username) {
-    onboardingModal.classList.remove("hidden");
-  } else {
-    promptLabel.textContent = "INSIRA A CHAVE DE ACESSO";
-    startBoot(username);
-  }
+  /* Sons */
+  backgroundMusic = new Audio(CONFIG.audio.background);
+  backgroundMusic.loop = true;
+  backgroundMusic.volume = CONFIG.audio.volume;
+
+  errorSound = new Audio(CONFIG.audio.error);
+  clickSound = new Audio(CONFIG.audio.click);
+  bootSound = new Audio(CONFIG.audio.boot);
+
+  /* Aplicar tema ao CSS */
+  applyTheme(CONFIG.theme);
+
+  /* Autoplay fix */
+  document.addEventListener("click", () => {
+    backgroundMusic.play().catch(() => {});
+  }, { once: true });
+
+  promptLabel.textContent = "INSIRA A CHAVE DE ACESSO";
+
+  startBoot(CONFIG.username);
 });
 
 /* =========================================================
-   ONBOARDING
+   APLICAR TEMA AO CSS
 ========================================================= */
 
-onboardingForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+function applyTheme(theme) {
+  const root = document.documentElement;
 
-  const realName = document.getElementById("real-name").value.trim();
-  const username = document.getElementById("username").value.trim();
+  root.style.setProperty("--bg", theme.colors.bg);
+  root.style.setProperty("--green", theme.colors.primary);
+  root.style.setProperty("--green-dim", theme.colors.dim);
+  root.style.setProperty("--green-faint", theme.colors.faint);
+  root.style.setProperty("--amber-error", theme.colors.error);
 
-  if (!realName || !username) {
-    onboardingError.textContent = "Ambos os campos são obrigatórios.";
-    return;
+  /* CRT extras */
+  if (!theme.crt.scanlines) {
+    document.body.style.setProperty("--disable-scanlines", "true");
   }
-
-  localStorage.setItem("arg_real_name", realName);
-  localStorage.setItem("arg_username", username);
-
-  onboardingModal.classList.add("hidden");
-  startBoot(username);
-});
+}
 
 /* =========================================================
    BOOT SEQUENCE + BOTÃO PROCEDER
 ========================================================= */
 
 function startBoot(username) {
-
-  // AUTOPLAY FIX — registar antes do botão PROCEDER existir
-  document.addEventListener("click", () => {
-      backgroundMusic.play().catch(() => {});
-  }, { once: true });
-
   bootScreen.classList.remove("hidden");
   bootLinesEl.textContent = "";
 
-  const lines = [...BOOT_LINES, `Utilizador reconhecido: ${username}`];
+  bootSound.play().catch(() => {});
+
+  const lines = [...CONFIG.boot.lines, `Utilizador reconhecido: ${username}`];
   let i = 0;
 
   function nextLine() {
@@ -156,9 +105,9 @@ function startBoot(username) {
   nextLine();
 }
 
-/* Remove linhas antigas para evitar overflow */
+/* Scroll inteligente */
 function appendBootLine(text) {
-  const MAX_LINES = 22;
+  const MAX_LINES = CONFIG.bootMaxLines;
 
   const current = bootLinesEl.textContent.split("\n");
   current.push(text);
@@ -170,18 +119,18 @@ function appendBootLine(text) {
   bootLinesEl.textContent = current.join("\n");
 }
 
-/* Botão para avançar */
+/* Botão PROCEDER */
 function showProceedButton() {
   const btn = document.createElement("button");
   btn.textContent = "PROCEDER";
   btn.className = "boot-proceed-btn";
 
-  // micro-delay para permitir que o CSS aplique animações
   setTimeout(() => {
     bootScreen.appendChild(btn);
   }, 50);
 
   btn.addEventListener("click", () => {
+    clickSound.play().catch(() => {});
     fadeToMain();
   });
 }
@@ -192,19 +141,15 @@ function fadeToMain() {
   setTimeout(() => {
     bootScreen.classList.add("hidden");
 
-    // MOSTRAR O MAIN SCREEN
     mainScreen.classList.remove("hidden-init");
-
-    // Fade-out do overlay
     fadeScreen.classList.remove("active");
 
-    // Agora sim, iniciar o main screen
     showMainScreen();
   }, 800);
 }
 
 /* =========================================================
-   MAIN SCREEN + AUTOPLAY FIX
+   MAIN SCREEN
 ========================================================= */
 
 function showMainScreen() {
@@ -215,11 +160,9 @@ function showMainScreen() {
   renderKeyDisplay("");
   keyRealInput.focus();
 
-  const username = localStorage.getItem("arg_username") || "UNKNOWN";
-
-  statusUser.textContent = `USER : ${username}`;
+  statusUser.textContent = `USER : ${CONFIG.username}`;
   statusStatus.textContent = "STATUS : ONLINE";
-  statusTrack.textContent = `TRACK : ${CURRENT_TRACK}`;
+  statusTrack.textContent = `TRACK : ${CONFIG.track}`;
 
   updateUptime();
   setInterval(() => {
@@ -298,14 +241,14 @@ function checkKey(rawValue) {
   const value = rawValue.trim().toUpperCase();
 
   if (!value) {
-    setResponse(DEFAULT_ERROR, false);
+    setResponse("CHAVE INVÁLIDA. Tenta novamente.", false);
     return;
   }
 
-  const entry = KEYS[value];
+  const entry = CONFIG.keys[value];
   entry
     ? setResponse(entry.message, entry.ok, value)
-    : setResponse(DEFAULT_ERROR, false);
+    : setResponse("CHAVE INVÁLIDA. Tenta novamente.", false);
 }
 
 function setResponse(message, ok, key = "") {

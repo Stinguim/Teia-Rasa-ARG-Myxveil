@@ -1,0 +1,96 @@
+{
+  "username": "Yu4i",
+
+  "track": "caffeine withdrawal",
+
+  "audio": {
+    "background": "audio/background.ogg",
+    "error": "audio/error.ogg",
+    "click": "audio/click.ogg",
+    "boot": "audio/boot.ogg",
+    "volume": 0.35
+  },
+
+  "theme": {
+    "name": "crt-green",
+
+    "colors": {
+      "bg": "#000000",
+      "primary": "#33ff66",
+      "dim": "#1a8f3a",
+      "faint": "#0d5c22",
+      "error": "#ff5555"
+    },
+
+    "crt": {
+      "scanlines": true,
+      "glow": true,
+      "flicker": true,
+      "floatIcon": true
+    }
+  },
+
+  "bootMaxLines": 22,
+
+  "boot": {
+    "lines": [
+      "ARG OS v2.7.14",
+      "",
+      "INICIANDO SISTEMA...",
+      "",
+      "[■■□□□□□□□□] 15%",
+      "[■■■■□□□□□□] 32%",
+      "[■■■■■■□□□□] 54%",
+      "[■■■■■■■■□□] 81%",
+      "[■■■■■■■■■■] 100%",
+      "",
+      "Inicialização concluída.",
+      "",
+      "A carregar módulos de autenticação...",
+      "✔ crypto.dll",
+      "✔ archive.sys",
+      "✔ gateway.node",
+      "✔ user.db",
+      "",
+      "A sincronizar relógio do sistema...",
+      "OK",
+      "",
+      "A verificar permissões...",
+      "Permissões válidas.",
+      "",
+      "A montar sistema de ficheiros...",
+      "OK",
+      "",
+      "A estabelecer ligação encriptada...",
+      "",
+      "[##########] 100%",
+      "",
+      "Nenhuma corrupção encontrada.",
+      "",
+      "Bem-vindo ao terminal seguro.",
+      "",
+      "Acesso: NÍVEL 0",
+      "",
+      "A aguardar autenticação..."
+    ]
+  },
+
+  "keys": {
+    "ECHO9": {
+      "ok": true,
+      "message": "CHAVE ACEITE. Acesso concedido a: SETOR 1."
+    },
+    "NULLPOINT": {
+      "ok": true,
+      "message": "CHAVE ACEITE. Novo registo desbloqueado."
+    },
+    "ECHO": {
+      "ok": false,
+      "message": "Chave incompleta. Falta algo."
+    },
+    "REMEMBER THIS": {
+      "ok": true,
+      "message": "Lembraste-te. Mas não o suficiente. Continua a procurar."
+    }
+  }
+}
