@@ -131,6 +131,12 @@ onboardingForm.addEventListener("submit", (e) => {
 ========================================================= */
 
 function startBoot(username) {
+
+  // AUTOPLAY FIX — registar antes do botão PROCEDER existir
+  document.addEventListener("click", () => {
+      backgroundMusic.play().catch(() => {});
+  }, { once: true });
+
   bootScreen.classList.remove("hidden");
   bootLinesEl.textContent = "";
 
@@ -208,11 +214,6 @@ function showMainScreen() {
 
   renderKeyDisplay("");
   keyRealInput.focus();
-
-  // Música toca ao clicar no botão PROCEDER
-  document.addEventListener("click", () => {
-    backgroundMusic.play().catch(() => {});
-  }, { once: true });
 
   const username = localStorage.getItem("arg_username") || "UNKNOWN";
 
