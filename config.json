@@ -8,6 +8,8 @@
     "error": "audio/error.ogg",
     "click": "audio/click.ogg",
     "boot": "audio/boot.ogg",
+    "key": "audio/key.ogg",
+    "access": "audio/access.ogg",
     "volume": 0.35
   },
 

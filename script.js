@@ -47,6 +47,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   clickSound = new Audio(CONFIG.audio.click);
   bootSound = new Audio(CONFIG.audio.boot);
 
+  keySound = new Audio(CONFIG.audio.key);
+  keySound.volume = 0.5;
+
+  accessSound = new Audio(CONFIG.audio.access);
+  accessSound.volume = 0.7;
+
   /* Aplicar tema ao CSS */
   applyTheme(CONFIG.theme);
 
@@ -187,10 +193,21 @@ function updateUptime() {
    INPUT DA CHAVE
 ========================================================= */
 
+let lastKeySound = 0;
+
 mainScreen.addEventListener("click", () => keyRealInput.focus());
 
 keyRealInput.addEventListener("input", () => {
   renderKeyDisplay(keyRealInput.value);
+
+  const now = performance.now();
+
+  // cooldown para evitar spam
+  if (now - lastKeySound > 40) {
+    keySound.currentTime = 0;
+    keySound.play().catch(() => {});
+    lastKeySound = now;
+  }
 });
 
 keyRealInput.addEventListener("keydown", (e) => {
@@ -262,6 +279,11 @@ function setResponse(message, ok, key = "") {
     return;
   }
 
+  // Som de acesso concedido
+  accessSound.currentTime = 0;
+  accessSound.play().catch(() => {});
+
+  // Chave especial que muda de página
   if (key === "REMEMBER THIS") {
     setTimeout(() => fadeTo("locations/loc1.html"), 1500);
   }
