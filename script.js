@@ -1,23 +1,20 @@
 /* =========================================================
-   ARG TERMINAL — script.js (Refactor)
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   CONFIGURAÇÃO
---------------------------------------------------------- */
+   ARG TERMINAL — script.js (Atualizado)
+========================================================= */
 
 const CURRENT_TRACK = "caffeine withdrawal";
-const MIN_KEY_LENGTH = 10;
-
 let cursorVisible = true;
 let inputFocused = false;
 let uptimeSeconds = 0;
-let cursorInterval = null;
 
-/* ---------------------------------------------------------
-   ELEMENTOS
---------------------------------------------------------- */
+const backgroundMusic = new Audio("audio/background.ogg");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.35;
 
+const errorSound = new Audio("audio/error.ogg");
+errorSound.volume = 0.7;
+
+/* ELEMENTOS */
 const onboardingModal = document.getElementById("onboarding-modal");
 const onboardingForm = document.getElementById("onboarding-form");
 const onboardingError = document.getElementById("onboarding-error");
@@ -40,21 +37,7 @@ const statusStatus = document.getElementById("status-status");
 const statusTrack = document.getElementById("status-track");
 const statusUptime = document.getElementById("status-uptime");
 
-/* ---------------------------------------------------------
-   ÁUDIO
---------------------------------------------------------- */
-
-const backgroundMusic = new Audio("audio/background.ogg");
-backgroundMusic.loop = true;
-backgroundMusic.volume = 0.35;
-
-const errorSound = new Audio("audio/error.ogg");
-errorSound.volume = 0.7;
-
-/* ---------------------------------------------------------
-   BOOT SEQUENCE
---------------------------------------------------------- */
-
+/* BOOT LINES */
 const BOOT_LINES = [
   "ARG OS v2.7.14",
   "",
@@ -96,10 +79,7 @@ const BOOT_LINES = [
   "A aguardar autenticação..."
 ];
 
-/* ---------------------------------------------------------
-   CHAVES
---------------------------------------------------------- */
-
+/* CHAVES */
 const KEYS = {
   "ECHO9": { ok: true, message: "CHAVE ACEITE. Acesso concedido a: SETOR 1." },
   "NULLPOINT": { ok: true, message: "CHAVE ACEITE. Novo registo desbloqueado." },
@@ -109,9 +89,9 @@ const KEYS = {
 
 const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
 
-/* ---------------------------------------------------------
+/* =========================================================
    ARRANQUE
---------------------------------------------------------- */
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
   const username = localStorage.getItem("arg_username");
@@ -124,9 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ---------------------------------------------------------
+/* =========================================================
    ONBOARDING
---------------------------------------------------------- */
+========================================================= */
 
 onboardingForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -146,9 +126,9 @@ onboardingForm.addEventListener("submit", (e) => {
   startBoot(username);
 });
 
-/* ---------------------------------------------------------
-   BOOT SEQUENCE
---------------------------------------------------------- */
+/* =========================================================
+   BOOT SEQUENCE + BOTÃO PROCEDER
+========================================================= */
 
 function startBoot(username) {
   bootScreen.classList.remove("hidden");
@@ -159,24 +139,59 @@ function startBoot(username) {
 
   function nextLine() {
     if (i < lines.length) {
-      bootLinesEl.textContent += lines[i] + "\n";
+      appendBootLine(lines[i]);
       i++;
       setTimeout(nextLine, 90 + Math.random() * 160);
     } else {
-      setTimeout(() => {
-        bootScreen.classList.add("hidden");
-        bootScreen.style.display = "none";
-        setTimeout(showMainScreen, 500);
-      }, 500);
+      setTimeout(showProceedButton, 600);
     }
   }
 
   nextLine();
 }
 
-/* ---------------------------------------------------------
-   MAIN SCREEN
---------------------------------------------------------- */
+/* Remove linhas antigas para evitar overflow */
+function appendBootLine(text) {
+  const MAX_LINES = 22;
+
+  const current = bootLinesEl.textContent.split("\n");
+  current.push(text);
+
+  if (current.length > MAX_LINES) {
+    current.shift();
+  }
+
+  bootLinesEl.textContent = current.join("\n");
+}
+
+/* Botão para avançar */
+function showProceedButton() {
+  const btn = document.createElement("button");
+  btn.textContent = "PROCEDER";
+  btn.className = "boot-proceed-btn";
+
+  // micro-delay para permitir que o CSS aplique animações
+  setTimeout(() => {
+    bootScreen.appendChild(btn);
+  }, 50);
+
+  btn.addEventListener("click", () => {
+    fadeToMain();
+  });
+}
+
+function fadeToMain() {
+  fadeScreen.classList.add("active");
+
+  setTimeout(() => {
+    bootScreen.classList.add("hidden");
+    showMainScreen();
+  }, 800);
+}
+
+/* =========================================================
+   MAIN SCREEN + AUTOPLAY FIX
+========================================================= */
 
 function showMainScreen() {
   mainScreen.classList.remove("hidden-init");
@@ -185,8 +200,10 @@ function showMainScreen() {
   renderKeyDisplay("");
   keyRealInput.focus();
 
-  fadeInMusic();
-  animateIcon();
+  /* Música só toca após interação humana */
+  document.addEventListener("click", () => {
+    backgroundMusic.play().catch(() => {});
+  }, { once: true });
 
   const username = localStorage.getItem("arg_username") || "UNKNOWN";
 
@@ -201,33 +218,9 @@ function showMainScreen() {
   }, 1000);
 }
 
-function fadeInMusic() {
-  backgroundMusic.volume = 0;
-  backgroundMusic.play().catch(() => {});
-
-  let volume = 0;
-  const fade = setInterval(() => {
-    volume = Math.min(volume + 0.02, 0.35);
-    backgroundMusic.volume = volume;
-
-    if (volume >= 0.35) clearInterval(fade);
-  }, 100);
-}
-
-function animateIcon() {
-  setInterval(() => {
-    terminalIcon.style.transform =
-      `translate(${Math.random() * 2 - 1}px, ${Math.random() * 2 - 1}px)`;
-
-    setTimeout(() => {
-      terminalIcon.style.transform = "";
-    }, 40);
-  }, 7000 + Math.random() * 6000);
-}
-
-/* ---------------------------------------------------------
+/* =========================================================
    UPTIME
---------------------------------------------------------- */
+========================================================= */
 
 function updateUptime() {
   const h = String(Math.floor(uptimeSeconds / 3600)).padStart(2, "0");
@@ -237,9 +230,9 @@ function updateUptime() {
   statusUptime.textContent = `UPTIME : ${h}:${m}:${s}`;
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    INPUT DA CHAVE
---------------------------------------------------------- */
+========================================================= */
 
 mainScreen.addEventListener("click", () => keyRealInput.focus());
 
@@ -261,9 +254,9 @@ keyRealInput.addEventListener("blur", () => {
   renderKeyDisplay(keyRealInput.value);
 });
 
-/* ---------------------------------------------------------
+/* =========================================================
    RENDER DO CAMPO
---------------------------------------------------------- */
+========================================================= */
 
 function renderKeyDisplay(value) {
   const escaped = [...value].map(escapeHtml).join("");
@@ -274,7 +267,7 @@ function renderKeyDisplay(value) {
   keyDisplay.innerHTML = escaped + cursor;
 }
 
-cursorInterval = setInterval(() => {
+setInterval(() => {
   if (inputFocused && keyRealInput.value.length === 0) {
     cursorVisible = !cursorVisible;
     renderKeyDisplay("");
@@ -287,9 +280,9 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    VALIDAÇÃO DA CHAVE
---------------------------------------------------------- */
+========================================================= */
 
 function checkKey(rawValue) {
   const value = rawValue.trim().toUpperCase();
@@ -321,9 +314,9 @@ function setResponse(message, ok, key = "") {
   }
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    FADE
---------------------------------------------------------- */
+========================================================= */
 
 function fadeTo(page) {
   fadeScreen.classList.add("active");
