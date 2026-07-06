@@ -706,3 +706,27 @@ body::before {
   .terminal-icon { animation: none; }
   body::before { display: none; }
 }
+
+#fade-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:black;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:opacity .8s ease;
+
+    z-index:99999;
+
+}
+
+#fade-screen.active{
+
+    opacity:1;
+
+}

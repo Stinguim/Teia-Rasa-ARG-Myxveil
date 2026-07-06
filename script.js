@@ -10,16 +10,55 @@
 let cursorVisible = true;
 // mini glitch no icon
 const terminalIcon = document.querySelector(".terminal-icon");
+// verificar se o mouse ta ligado
+let inputFocused = false;
 // Mensagens da sequência de arranque (podes reescrever livremente)
 const BOOT_LINES = [
-  "INICIANDO SISTEMA...",
-  "A verificar integridade dos módulos... [OK]",
-  "A estabelecer ligação segura...",
-  "Ligação estabelecida.",
-  "A carregar protocolo de acesso...",
-  "AVISO: sessão não autenticada detetada",
-  "Acesso: NÍVEL 0",
-  "Aguardando credenciais...",
+
+"ARG OS v2.7.14",
+"",
+"INICIANDO SISTEMA...",
+"",
+"[■■□□□□□□□□] 15%",
+"[■■■■□□□□□□] 32%",
+"[■■■■■■□□□□] 54%",
+"[■■■■■■■■□□] 81%",
+"[■■■■■■■■■■] 100%",
+"",
+"Inicialização concluída.",
+"",
+"A carregar módulos de autenticação...",
+"✔ crypto.dll",
+"✔ archive.sys",
+"✔ gateway.node",
+"✔ user.db",
+"",
+"A sincronizar relógio do sistema...",
+"OK",
+"",
+"A verificar permissões...",
+"Permissões válidas.",
+"",
+"A montar sistema de ficheiros...",
+"OK",
+"",
+"A estabelecer ligação encriptada...",
+"",
+"Handshake...",
+"Handshake...",
+"Handshake concluído.",
+"",
+"A verificar integridade...",
+"",
+"[##########] 100%",
+"",
+"Nenhuma corrupção encontrada.",
+"",
+"Bem-vindo ao terminal seguro.",
+"",
+"Acesso: NÍVEL 0",
+"",
+"A aguardar autenticação..."
 ];
 
 // Comprimento mínimo do campo de chave (nº de underscores visíveis
@@ -44,6 +83,10 @@ const KEYS = {
     ok: false,
     message: "Chave incompleta. Falta algo.",
   },
+  "REMEMBER THIS": {
+    ok: true,
+    message: "Lembraste-te. Mas não o suficiente. Continua a procurar.",
+},
 };
 
 const DEFAULT_ERROR = "CHAVE INVÁLIDA. Tenta novamente.";
@@ -196,19 +239,22 @@ keyRealInput.addEventListener("keydown", (e) => {
 });
 
 function renderKeyDisplay(value) {
+
     let html = "";
 
     for (let i = 0; i < value.length; i++) {
         html += escapeHtml(value[i]);
     }
 
-    // Se houver texto, mostra sempre o cursor fixo
-    if (value.length > 0) {
-        html += '<span class="placeholder-char">|</span>';
-    }
-    // Se estiver vazio, usa a animação
-    else if (cursorVisible) {
-        html += '<span class="placeholder-char">|</span>';
+    if (inputFocused) {
+
+        if (value.length > 0) {
+            html += '<span class="placeholder-char">|</span>';
+        }
+        else if (cursorVisible) {
+            html += '<span class="placeholder-char">|</span>';
+        }
+
     }
 
     keyDisplay.innerHTML = html;
@@ -216,13 +262,13 @@ function renderKeyDisplay(value) {
 
 cursorInterval = setInterval(() => {
 
-    // Só anima quando o campo está vazio
-    if (keyRealInput.value.length === 0) {
+    if (inputFocused && keyRealInput.value.length === 0) {
+
         cursorVisible = !cursorVisible;
         renderKeyDisplay("");
-    }
 
-}, 500);
+    }
+},500);
 
 function escapeHtml(str) {
   const div = document.createElement("div");
@@ -251,14 +297,29 @@ function checkKey(rawValue) {
 }
 
 function setResponse(message, ok) {
-  keyResponse.textContent = message;
-  keyResponse.classList.remove("ok", "err");
-  keyResponse.classList.add(ok ? "ok" : "err");
 
-  if (!ok) {
-    errorSound.currentTime = 0;
-    errorSound.play();
-  }
+    keyResponse.textContent = message;
+
+    keyResponse.classList.remove("ok","err");
+    keyResponse.classList.add(ok ? "ok" : "err");
+
+    if(!ok){
+
+        errorSound.currentTime = 0;
+        errorSound.play();
+
+    }
+
+    else{
+
+        setTimeout(() => {
+
+            fadeTo("locations/loc1.html");
+
+        },1200);
+
+    }
+
 }
 
 setInterval(() => {
@@ -273,3 +334,14 @@ setInterval(() => {
     }, 40);
 
 }, 7000 + Math.random()*6000);
+
+//  ver se o mouse ta selecionado
+keyRealInput.addEventListener("focus", () => {
+    inputFocused = true;
+    renderKeyDisplay(keyRealInput.value);
+});
+
+keyRealInput.addEventListener("blur", () => {
+    inputFocused = false;
+    renderKeyDisplay(keyRealInput.value);
+});
