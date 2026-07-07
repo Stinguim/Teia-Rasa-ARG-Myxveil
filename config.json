@@ -165,6 +165,14 @@
     "AMIGO": {
       "ok": false,
       "message": "Sim Yu4i?"
+    },
+    "BEPO": {
+      "ok": false,
+      "message": "Meu nome não é a chave."
+    },
+    "CAFE": {
+      "ok": false,
+      "message": "Tua comida favorita. Mas não é a chave."
     }
   }
 }
