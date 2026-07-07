@@ -299,6 +299,18 @@ function setResponse(message, ok, key = "") {
     const readingBuffer = 1800;
     setTimeout(() => fadeTo("locations/frg-7q2m.html"), typingTime + readingBuffer);
   }
+
+  if (key === "SNLY") {
+    const typingTime = message.length * 42;
+    const readingBuffer = 1800;
+    setTimeout(() => fadeTo("locations/frg-6a73.html"), typingTime + readingBuffer);
+  }
+
+  if (key === "8652") {
+    const typingTime = message.length * 42;
+    const readingBuffer = 1800;
+    setTimeout(() => fadeTo("locations/frg-3z9k.html"), typingTime + readingBuffer);
+  }
 }
 
 /* Escreve a mensagem de resposta letra a letra */

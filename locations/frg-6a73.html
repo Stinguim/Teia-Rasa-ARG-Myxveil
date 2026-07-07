@@ -1,38 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>:: ? ::</title>
-    <link rel="stylesheet" href="../style.css">
-    <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2rem;
-            margin-top: 5vh;
-        }
-
-        .x {
-            font-size: 4rem;
-            font-weight: 300;
-            opacity: 0.6;
-            user-select: none;
-        }
-
-        img {
-            max-width: 60vw;
-            border-radius: 4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: ? ::</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 5vh;
+}
+.images-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.x {
+  font-size: 4rem;
+  font-weight: 300;
+  opacity: 0.6;
+  user-select: none;
+}
+img {
+  max-width: 25vw;
+  min-width: 140px;
+  border-radius: 4px;
+}
+.clue {
+  max-width: 60vw;
+  text-align: center;
+  line-height: 1.6;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <img src="img1.png" alt="">
-        <div class="x">×</div>
-        <img src="img2.png" alt="">
-        <div class="x">×</div>
-        <img src="img3.png" alt="">
-    </div>
+<div class="container">
+
+<h1>Codigo de acesso parte 3</h1>
+
+<div class="images-row">
+  <img src="../images/number.png" alt="Fragmento de código — parte 1">
+  <div class="x">×</div>
+  <img src="../images/number 2.png" alt="Fragmento de código — parte 2">
+  <div class="x">×</div>
+  <img src="../images/number 3.png" alt="Fragmento de código — parte 3">
+</div>
+
+<p class="clue">
+  o fragmento do código é por ordem decrescente — BEPO
+</p>
+
+<a href="../index.html">&larr; voltar ao terminal</a>
+
+</div>
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: TRANSMISSÃO FINAL ::</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.cipher-block {
+  font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  line-height: 2.1;
+  word-break: break-word;
+  color: var(--green);
+  text-shadow: 0 0 6px var(--green);
+}
+
+.freq-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 8px;
+  max-width: 560px;
+  margin: 18px auto;
+  font-size: 0.85rem;
+  color: var(--green-dim);
+}
+
+.freq-cell {
+  border: 1px solid var(--green-faint);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.freq-cell .sym {
+  font-size: 1.1rem;
+  color: var(--green);
+  display: block;
+}
+
+.crib {
+  margin: 20px auto 4px;
+  max-width: 560px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--green-dim);
+}
+
+.crib b {
+  color: var(--green);
+}
+
+.answer-hint {
+  font-size: 0.72rem;
+  color: var(--green-faint);
+  font-style: italic;
+  margin-top: 22px;
+}
+</style>
+</head>
+<body>
+<div class="location-page visible">
+
+<h1>Codigo de acesso parte 4</h1>
+
+<div class="audio-log">
+  <p class="audio-log-title">TRANSMISSÃO — 26 SÍMBOLOS, 1 ALFABETO</p>
+
+  <div class="cipher-block">
+    ▢✦▦▥, ☖▣ ◇☆△ ✦☖ ◎▥☖ △▨▨△▤✕△▨ ▣△▤✦☆▨△ ◇✦ ☆▨ ☗✦▨<br>
+    ○▥▤☗☆●▥ ✦ ◎✦▨▣▥▩ ✕☖▤☗▥▩ ▥ ✦▩▦△○▥,<br>
+    ✦☖ ▦▨▥▣✦☗▥ ✦ ▩△▢✦▩ ▧☖✦ ▤△▥ ●▥▩☗▥ ◇✦ ▧☖✦▢▨△▨ ▦▨▥▣✦▩▩△▩!
+  </div>
+</div>
+
+<div class="crib">
+  <p><b>Sinais recuperados (análise de frequência do canal):</b></p>
+  <p>Contagem de ocorrências de cada símbolo na transmissão completa:</p>
+</div>
+
+<div class="crib">
+  <p>
+    Em português, as letras mais frequentes num texto
+    costumam ser, por esta ordem, A, E, O, S, R, I...
+    O símbolo mais repetido desta transmissão já foi confirmado como sendo
+    a letra E. O segundo mais repetido é a letra O. A resposta é o que para
+    ti é importante.
+  </p>
+</div>
+
+<a href="../index.html" class="back-link">&larr; voltar ao terminal</a>
+
+</div>
+</body>
+</html>
