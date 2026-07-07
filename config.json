@@ -180,6 +180,14 @@
       "ok": false,
       "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
     },
+    "KYS": {
+      "ok": false,
+      "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
+    },
+    "VAI TE FODER": {
+      "ok": false,
+      "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
+    },
     "PASSWORD": {
       "ok": false,
       "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
