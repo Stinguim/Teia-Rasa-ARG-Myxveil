@@ -402,5 +402,6 @@ function fadeTo(page) {
     window.location.href = page;
   }, 800);
 }
-
+// Iniciar a sequência de boot
+startBoot(CONFIG.username);
 }); // Fecha o DOMContentLoaded
