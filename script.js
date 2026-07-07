@@ -311,6 +311,12 @@ function setResponse(message, ok, key = "") {
     const readingBuffer = 1800;
     setTimeout(() => fadeTo("locations/frg-3z9k.html"), typingTime + readingBuffer);
   }
+
+  if (key === "2A7RFSNLY8652PROMESSAS") {
+    const typingTime = message.length * 42;
+    const readingBuffer = 1800;
+    setTimeout(() => triggerFinalSequence(), typingTime + readingBuffer);
+  }
 }
 
 /* Escreve a mensagem de resposta letra a letra */
@@ -330,6 +336,27 @@ function typeResponse(message) {
   }
 
   typeChar();
+}
+
+/* =========================================================
+   SEQUÊNCIA FINAL — ARG COMPLETO
+========================================================= */
+
+function triggerFinalSequence() {
+  const icon = document.querySelector(".terminal-icon");
+  const finalReveal = document.getElementById("final-reveal");
+
+  backgroundMusic.pause();
+
+  icon.classList.add("final-icon-up");
+  promptLabel.style.display = "none";
+  document.querySelector(".key-input-wrap").style.display = "none";
+  keyResponse.style.display = "none";
+
+  setTimeout(() => {
+    finalReveal.classList.remove("hidden");
+    requestAnimationFrame(() => finalReveal.classList.add("visible"));
+  }, 900);
 }
 
 /* =========================================================

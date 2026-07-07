@@ -150,10 +150,13 @@
       "ok": true,
       "message": "Correto! Continuando protocolo de recuperação."
     },
+    "2A7RFSNLY8652PROMESSAS": {
+      "ok": true,
+      "message": "Sequência completa. Carregando informações..."
+    },
     "8652": {
       "ok": true,
       "message": "Último fragmento localizado. A decifrar transmissão..."
-    },
     },
     "PROMESSA": {
       "ok": false,
