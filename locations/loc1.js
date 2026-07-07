@@ -7,6 +7,11 @@ const locBootLines = document.getElementById("loc-boot-lines");
 const locMain = document.getElementById("loc-main");
 const fadeScreen = document.getElementById("fade-screen");
 
+const backgroundMusic = new Audio("../audio/NOME_DA_MUSICA.ogg");
+
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.4;
+
 const RECOVERY_LINES = [
   "AVISO: TENTATIVA DE RECUPERAÇÃO DE ACESSO DETETADA",
   "SISTEMA DE RECUPERAÇÃO DE PASSWORD ATIVADO PELO SISTEMA",
@@ -58,5 +63,10 @@ function revealEnigma() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  backgroundMusic.play().catch(() => {
+      document.addEventListener("click", () => {
+          backgroundMusic.play().catch(() => {});
+      }, { once: true });
+  });
   nextLine();
 });

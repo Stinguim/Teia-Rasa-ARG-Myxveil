@@ -4,7 +4,19 @@
 
 const locMain = document.getElementById("loc-main");
 
+const backgroundMusic = new Audio("../audio/NOME_DA_MUSICA.ogg");
+
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.4;
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  backgroundMusic.play().catch(() => {
+      document.addEventListener("click", () => {
+          backgroundMusic.play().catch(() => {});
+      }, { once: true });
+  });
+
   requestAnimationFrame(() => {
     locMain.classList.remove("hidden-init");
     requestAnimationFrame(() => {
