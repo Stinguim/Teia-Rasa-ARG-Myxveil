@@ -94,6 +94,10 @@
         "ok": false,
         "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
     },
+    "CPC": {
+        "ok": false,
+        "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
+    },
     "PAWNED": {
         "ok": false,
         "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
@@ -177,6 +181,14 @@
     "CAFE": {
       "ok": false,
       "message": "Tua comida favorita. Mas não é a chave."
+    },
+    "AKI": {
+      "ok": false,
+      "message": "Muitos chamam Heroi, outros vilão de Arcana. Mas não é a chave."
+    },
+    "RGB": {
+      "ok": false,
+      "message": "As cores ou a pessoa que te referes? Mas não é a chave."
     }
   }
 }
