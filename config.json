@@ -217,6 +217,17 @@
     "RGB": {
       "ok": false,
       "message": "As cores ou a pessoa que te referes? Mas não é a chave."
-    }
+    },
+    "INSONIA": {
+      "ok": false,
+      "message": "Algo que te afeta. Mas não é a chave."
+    },
+    "INSÔNIA": {
+      "ok": false,
+      "message": "Algo que te afeta. Mas não é a chave."
+    },
+    "DESCAFEINADO": {
+      "ok": false,
+      "message": "Algo que te afetaSupostamente só gostavas de café. Mas não é a chave."
   }
 }
