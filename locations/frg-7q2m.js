@@ -12,8 +12,8 @@ const cipherResult = document.getElementById("cipher-result");
    Muda SOLUTION e RESULT_MESSAGE para o teu próprio enigma.
    SOLUTION tem de ser só letras/números, sem espaços.
 ----------------------------------------------------------- */
-const SOLUTION = "MYXVEIL";
-const RESULT_MESSAGE = "Fragmento reconstruído. Regista-o e usa-o no terminal principal.";
+const SOLUTION = "TEIAS";
+const RESULT_MESSAGE = "TEIAS. Cada um deles fazia parte dela sem saber. Regista este fragmento e usa-o no terminal principal.";
 
 let tiles = [];
 let selectedIndex = null;
