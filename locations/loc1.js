@@ -7,7 +7,7 @@ const locBootLines = document.getElementById("loc-boot-lines");
 const locMain = document.getElementById("loc-main");
 const fadeScreen = document.getElementById("fade-screen");
 
-const backgroundMusic = new Audio("../audio/NOME_DA_MUSICA.ogg");
+const backgroundMusic = new Audio("../audio/let one go.ogg");
 
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.4;

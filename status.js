@@ -51,9 +51,9 @@
 
       switch (page) {
         case "loc1.html":
-          trackName = "NOME_DA_MUSICA";
+          trackName = "Let one go";
           break;
-          
+
         case "frg-3z9k.html":
           trackName = "INTERTWINED";
           break;
