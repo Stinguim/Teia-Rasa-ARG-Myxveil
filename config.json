@@ -65,13 +65,11 @@
       "",
       "A estabelecer ligação encriptada...",
       "",
-      "[##########] 100%",
+      "[■■■■■■■■■■] 100%",
       "",
       "Nenhuma corrupção encontrada.",
       "",
       "Bem-vindo ao terminal seguro.",
-      "",
-      "Acesso: NÍVEL 0",
       "",
       "A aguardar autenticação..."
     ]
@@ -321,6 +319,14 @@
     "VAZIO": {
       "ok": false,
       "message": "Huh?"
+    },
+    "ALFABETO": {
+      "ok": false,
+      "message": "ABCDEFGHIJKLMNOPQRSTUVWXYZ."
+    },
+    "DUVESSA": {
+      "ok": false,
+      "message": "Ja ouvi falar dela mas não encontro informações suficientes na base de dados. Mas não é a chave."
     }
   }
 }
