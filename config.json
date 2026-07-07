@@ -229,5 +229,70 @@
     "DESCAFEINADO": {
       "ok": false,
       "message": "Algo que te afetaSupostamente só gostavas de café. Mas não é a chave."
+    },
+    "DRAGOES": {
+      "ok": false,
+      "message": "Os dragões que falaste da 7u4a? Mas não é a chave."
+    },
+    "VIRTUAL": {
+      "ok": false,
+      "message": "Futures...made of...virtual insanity!"
+    },
+    "ARG": {
+      "ok": false,
+      "message": "Alternate Reality Game. Mas não é a chave."
+    },
+    "TEIA": {
+      "ok": false,
+      "message": "Rasa?"
+    },
+    "RASA": {
+      "ok": false,
+      "message": "Teia?"
+    },
+    "BOOT": {
+      "ok": false,
+      "message": "?_?...Não é a chave..."
+    },
+    "ADMIN": {
+      "ok": false,
+      "message": "?_?...Não é a chave..."
+    },
+    "SUDO": {
+      "ok": false,
+      "message": "?_?...Não é a chave..."
+    },
+    "12345": {
+      "ok": false,
+      "message": "Estás bem Yu4i? Porque é que isso seria a chave?"
+    },
+    "MANGA": {
+      "ok": false,
+      "message": "A tua favorita incluía umas raparigas com poderes. Mas não é a chave."
+    },
+    "MANGÁ": {
+      "ok": false,
+      "message": "A tua favorita incluía umas raparigas com poderes. Mas não é a chave."
+    },
+    "OLÁ": {
+      "ok": false,
+      "message": "Olá Yu4i, estás bem?"
+    },
+    "OLA": {
+      "ok": false,
+      "message": "Olá Yu4i, estás bem?"
+    },
+    "DESISTO": {
+      "ok": false,
+      "message": "Yu4i, tu nunca desistes."
+    },
+    "PARABENS": {
+      "ok": false,
+      "message": "Mas ainda não é o meu aniversário, estás bem?"
+    },
+    "PARABÉNS": {
+      "ok": false,
+      "message": "Mas ainda não é o meu aniversário, estás bem?"
+    }
   }
 }

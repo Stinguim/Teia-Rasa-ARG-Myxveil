@@ -92,44 +92,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   promptLabel.textContent = "INSIRA A CHAVE DE ACESSO";
 
-  initOnboarding();
-});
-
-/* =========================================================
-   ONBOARDING — primeira visita
-========================================================= */
-
-function initOnboarding() {
-  const modal = document.getElementById("onboarding-modal");
-  const form = document.getElementById("onboarding-form");
-  const errorEl = document.getElementById("onboarding-error");
-
-  const saved = localStorage.getItem("arg_player");
-
-  if (saved) {
-    startBoot(CONFIG.username);
-    return;
-  }
-
-  modal.classList.remove("hidden");
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const realName = document.getElementById("real-name").value.trim();
-    const username = document.getElementById("username").value.trim();
-
-    if (!realName || !username) {
-      errorEl.textContent = "Preenche os dois campos para continuar.";
-      return;
-    }
-
-    localStorage.setItem("arg_player", JSON.stringify({ realName, username }));
-
-    modal.classList.add("hidden");
-    startBoot(CONFIG.username);
-  });
-}
 
 /* =========================================================
    APLICAR TEMA AO CSS
@@ -439,3 +401,5 @@ function fadeTo(page) {
     window.location.href = page;
   }, 800);
 }
+
+}); // Fecha o DOMContentLoaded
