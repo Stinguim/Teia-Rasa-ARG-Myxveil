@@ -142,7 +142,7 @@
       "ok": true,
       "message": "Correto! Continuando protocolo de recuperação."
     },
-    "BSOD": {
+    "PURGE": {
       "ok": false,
       "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
     },
@@ -161,6 +161,10 @@
     "ARCANA": {
       "ok": false,
       "message": "Uma história de fantasia? Não é a chave."
+    },
+    "AMIGO": {
+      "ok": false,
+      "message": "Sim Yu4i?"
     }
   }
 }
