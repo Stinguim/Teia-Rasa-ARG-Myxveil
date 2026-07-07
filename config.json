@@ -94,6 +94,14 @@
         "ok": false,
         "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
     },
+    "PAWNED": {
+        "ok": false,
+        "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
+    },
+    "TECNOLOGIA PARANORMAL": {
+        "ok": false,
+        "message": "Isso é um elemento paranormal. Não é a chave."
+    },
     "NATE": {
         "ok": false,
         "message": "N4te, não esqueceste da chave pois não? Não é tarde de mais pois não?..."
@@ -102,17 +110,29 @@
         "ok": false,
         "message": "N4te, não esqueceste da chave pois não? Não é tarde de mais pois não?..."
     },
-    "PAWNED": {
+    "7UN4": {
         "ok": false,
-        "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
+        "message": "7UN4, ela e os seus animais. Mas não é a chave."
+    },
+    "Luna": {
+        "ok": false,
+        "message": "7UN4, ela e os seus animais. Mas não é a chave."
     },
     "ESHIR": {
         "ok": false,
         "message": "Um Maniaco que so quer morte? Por favor, não é a chave."
     },
-    "2A7rF": {
+    "80085": {
+        "ok": false,
+        "message": "-.- a sério? Não é a chave."
+    },
+    "2A7RF": {
       "ok": true,
       "message": "Correto! Continuando protocolo de recuperação."
+    },
+    "BSOD": {
+      "ok": true,
+      "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
     }
   }
 }

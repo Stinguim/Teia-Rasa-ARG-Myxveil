@@ -202,10 +202,11 @@ keyRealInput.addEventListener("input", () => {
 
   const now = performance.now();
 
-  // cooldown para evitar spam
-  if (now - lastKeySound > 20) {
-    keySound.currentTime = 0;
-    keySound.play().catch(() => {});
+  // cooldown reduzido — sons sobrepõem-se em vez de cortar o anterior
+  if (now - lastKeySound > 15) {
+    const soundInstance = keySound.cloneNode();
+    soundInstance.volume = keySound.volume;
+    soundInstance.play().catch(() => {});
     lastKeySound = now;
   }
 });
@@ -288,7 +289,9 @@ function setResponse(message, ok, key = "") {
 
   // Chave especial que muda de página
   if (key === "REMEMBER THIS") {
-    setTimeout(() => fadeTo("locations/loc1.html"), 1500);
+    const typingTime = message.length * 42; // média do intervalo por caráter em typeResponse
+    const readingBuffer = 1800; // tempo extra para ler a frase já completa
+    setTimeout(() => fadeTo("locations/loc1.html"), typingTime + readingBuffer);
   }
 }
 
