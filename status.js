@@ -50,12 +50,16 @@
       const page = window.location.pathname.split("/").pop();
 
       switch (page) {
+        case "loc1.html":
+          trackName = "NOME_DA_MUSICA";
+          break;
+          
         case "frg-3z9k.html":
           trackName = "INTERTWINED";
           break;
 
         case "frg-6a73.html":
-          trackName = "NOME DA MÚSICA";
+          trackName = "overpopulation at the end of everything is...";
           break;
 
         case "frg-7q2m.html":
