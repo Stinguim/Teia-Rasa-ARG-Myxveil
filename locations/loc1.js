@@ -8,7 +8,7 @@ const locMain = document.getElementById("loc-main");
 const fadeScreen = document.getElementById("fade-screen");
 
 const RECOVERY_LINES = [
-  "AVISO: TENTATIVA DE AUTENTICAÇÃO FALHADA",
+  "AVISO: TENTATIVA DE RECUPERAÇÃO DE ACESSO DETETADA",
   "SISTEMA DE RECUPERAÇÃO DE PASSWORD ATIVADO PELO SISTEMA",
   "",
   "> A ATIVAR OPERAÇÃO DE RECUPERAÇÃO DE ACESSO...",
@@ -21,8 +21,6 @@ const RECOVERY_LINES = [
   "a password na íntegra.",
   "Em alternativa, será libertado um fragmento do código",
   "de acesso original, como prova de vida do sistema.",
-  "",
-  "A descodificar fragmento..."
 ];
 
 let lineIndex = 0;
