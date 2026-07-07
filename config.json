@@ -114,6 +114,14 @@
         "ok": false,
         "message": "7UN4, ela e os seus animais. Mas não é a chave."
     },
+    "S38A5TIAN": {
+        "ok": false,
+        "message": "S38A5TIAN, o que vê tudo para além dos olhos. Mas não é a chave."
+    },
+    "SEBASTIAN": {
+        "ok": false,
+        "message": "S38A5TIAN, o que vê tudo para além dos olhos. Mas não é a chave."
+    },
     "Luna": {
         "ok": false,
         "message": "7UN4, ela e os seus animais. Mas não é a chave."
@@ -133,6 +141,10 @@
     "BSOD": {
       "ok": true,
       "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
+    },
+    "GAY": {
+      "ok": true,
+      "message": "S38A5TIAN, este é o tablet do Yu4i não o teu. Mas não é a chave."
     }
   }
 }
