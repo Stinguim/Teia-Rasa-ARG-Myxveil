@@ -4,7 +4,7 @@
 
 const locMain = document.getElementById("loc-main");
 
-const backgroundMusic = new Audio("../audio/NOME_DA_MUSICA.ogg");
+const backgroundMusic = new Audio("../audio/The-Chair.ogg");
 
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.4;

@@ -59,7 +59,7 @@
           break;
 
         case "frg-7q2m.html":
-          trackName = "OUTRA MÚSICA";
+          trackName = "The Chair";
           break;
       }
 
