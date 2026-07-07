@@ -268,10 +268,13 @@ function checkKey(rawValue) {
     : setResponse("CHAVE INVÁLIDA. Tenta novamente.", false);
 }
 
+let responseTypeToken = 0;
+
 function setResponse(message, ok, key = "") {
-  keyResponse.textContent = message;
   keyResponse.classList.toggle("ok", ok);
   keyResponse.classList.toggle("err", !ok);
+
+  typeResponse(message);
 
   if (!ok) {
     errorSound.currentTime = 0;
@@ -287,6 +290,25 @@ function setResponse(message, ok, key = "") {
   if (key === "REMEMBER THIS") {
     setTimeout(() => fadeTo("locations/loc1.html"), 1500);
   }
+}
+
+/* Escreve a mensagem de resposta letra a letra */
+function typeResponse(message) {
+  const token = ++responseTypeToken;
+  keyResponse.textContent = "";
+
+  let i = 0;
+
+  function typeChar() {
+    if (token !== responseTypeToken) return; // resposta cancelada por uma nova
+    if (i <= message.length) {
+      keyResponse.textContent = message.slice(0, i);
+      i++;
+      setTimeout(typeChar, 25 + Math.random() * 35);
+    }
+  }
+
+  typeChar();
 }
 
 /* =========================================================

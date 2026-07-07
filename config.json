@@ -78,21 +78,25 @@
   },
 
   "keys": {
-    "ECHO9": {
-      "ok": true,
-      "message": "CHAVE ACEITE. Acesso concedido a: SETOR 1."
-    },
-    "NULLPOINT": {
-      "ok": true,
-      "message": "CHAVE ACEITE. Novo registo desbloqueado."
-    },
-    "ECHO": {
-      "ok": false,
-      "message": "Chave incompleta. Falta algo."
-    },
     "REMEMBER THIS": {
       "ok": true,
-      "message": "Lembraste-te. Mas não o suficiente. Continua a procurar."
+      "message": "Seguindo o protocolo de esquecimento da password."
+    },
+    "OVELHA": {
+        "ok": false,
+        "message": "O Nate gostava de ovelhas. Não significa que seja a chave."
+    },
+    "OVELHAS": {
+        "ok": false,
+        "message": "O Nate gostava de ovelhas. Não significa que seja a chave."
+    },
+    "APIC": {
+        "ok": false,
+        "message": "Isso é uma companhia de investigação do paranormal. Não é a chave."
+    },
+    "Nate": {
+        "ok": false,
+        "message": "Nate, não esqueceste da chave pois não? Não é tarde de mais pois não?..."
     }
   }
 }

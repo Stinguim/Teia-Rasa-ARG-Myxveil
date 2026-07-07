@@ -9,12 +9,10 @@ const fadeScreen = document.getElementById("fade-screen");
 
 const RECOVERY_LINES = [
   "AVISO: TENTATIVA DE AUTENTICAÇÃO FALHADA",
-  "PASSWORD NÃO RECONHECIDA PELO SISTEMA",
+  "SISTEMA DE RECUPERAÇÃO DE PASSWORD ATIVADO PELO SISTEMA",
   "",
   "> A ATIVAR OPERAÇÃO DE RECUPERAÇÃO DE ACESSO...",
-  "[OK] Ligação ao núcleo da TEIA RASA estabelecida",
   "[OK] Pedido de redefinição registado",
-  "[OK] Protocolo de emergência ativado",
   "",
   "A verificar permissões do requerente...",
   "[AVISO] Identidade não totalmente verificada",
