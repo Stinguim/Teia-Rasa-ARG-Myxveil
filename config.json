@@ -120,6 +120,10 @@
         "ok": false,
         "message": "O teu próprio nome não é a chave..."
     },
+    "YURI": {
+        "ok": false,
+        "message": "O teu próprio nome não é a chave..."
+    },
     "S38A5TIAN": {
         "ok": false,
         "message": "S38A5TIAN, o que vê tudo para além dos olhos. Mas não é a chave."
@@ -165,6 +169,10 @@
       "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
     },
     "GAY": {
+      "ok": false,
+      "message": "S38A5TIAN, este é o tablet do Yu4i não o teu. Mas não é a chave."
+    },
+    "GAYS": {
       "ok": false,
       "message": "S38A5TIAN, este é o tablet do Yu4i não o teu. Mas não é a chave."
     },
