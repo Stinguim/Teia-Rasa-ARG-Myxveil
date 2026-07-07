@@ -178,6 +178,22 @@
       "ok": false,
       "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
     },
+    "CARALHO": {
+      "ok": false,
+      "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
+    },
+    "PASSWORD": {
+      "ok": false,
+      "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
+    },
+    "PROTOCOLO DE RECUPERAÇÃO": {
+      "ok": false,
+      "message": "'Remember This', mas acho estranho não te lembrares."
+    },
+    "PROTOCOLO DE RECUPERAcÃO": {
+      "ok": false,
+      "message": "'Remember This', mas acho estranho não te lembrares."
+    },
     "ARCANA": {
       "ok": false,
       "message": "Uma história de fantasia? Não é a chave."

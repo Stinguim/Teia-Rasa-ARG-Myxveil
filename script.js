@@ -5,7 +5,6 @@
 let CONFIG = null;
 let cursorVisible = true;
 let inputFocused = false;
-let uptimeSeconds = 0;
 
 let backgroundMusic;
 let errorSound;
@@ -32,6 +31,19 @@ const statusTrack = document.getElementById("status-track");
 const statusUptime = document.getElementById("status-uptime");
 
 /* =========================================================
+   TEMPO PERSISTENTE (localStorage)
+========================================================= */
+
+function getStartTime() {
+  let start = localStorage.getItem("arg_start_time");
+  if (!start) {
+    start = Date.now().toString();
+    localStorage.setItem("arg_start_time", start);
+  }
+  return parseInt(start, 10);
+}
+
+/* =========================================================
    LOAD CONFIG.JSON
 ========================================================= */
 
@@ -55,6 +67,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   /* Aplicar tema ao CSS */
   applyTheme(CONFIG.theme);
+
+  /* Timestamp de início persistente (para o UPTIME não reiniciar entre páginas) */
+  getStartTime();
 
   /* Autoplay fix */
   document.addEventListener("click", () => {
@@ -171,10 +186,7 @@ function showMainScreen() {
   statusTrack.textContent = `TRACK : ${CONFIG.track}`;
 
   updateUptime();
-  setInterval(() => {
-    uptimeSeconds++;
-    updateUptime();
-  }, 1000);
+  setInterval(updateUptime, 1000);
 }
 
 /* =========================================================
@@ -182,9 +194,12 @@ function showMainScreen() {
 ========================================================= */
 
 function updateUptime() {
-  const h = String(Math.floor(uptimeSeconds / 3600)).padStart(2, "0");
-  const m = String(Math.floor((uptimeSeconds % 3600) / 60)).padStart(2, "0");
-  const s = String(uptimeSeconds % 60).padStart(2, "0");
+  const start = getStartTime();
+  const elapsed = Math.floor((Date.now() - start) / 1000);
+
+  const h = String(Math.floor(elapsed / 3600)).padStart(2, "0");
+  const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
+  const s = String(elapsed % 60).padStart(2, "0");
 
   statusUptime.textContent = `UPTIME : ${h}:${m}:${s}`;
 }
@@ -312,7 +327,7 @@ function setResponse(message, ok, key = "") {
     setTimeout(() => fadeTo("locations/frg-3z9k.html"), typingTime + readingBuffer);
   }
 
-  if (key === "2A7RFSNLY8652PROMESSAS") {
+  if (key === "2A7RFSNLY8652PROMESSA") {
     const typingTime = message.length * 42;
     const readingBuffer = 1800;
     setTimeout(() => triggerFinalSequence(), typingTime + readingBuffer);
@@ -345,6 +360,11 @@ function typeResponse(message) {
 function triggerFinalSequence() {
   const icon = document.querySelector(".terminal-icon");
   const finalReveal = document.getElementById("final-reveal");
+
+  /* Guarda o tempo total que o jogador demorou a completar o ARG */
+  const start = getStartTime();
+  const totalSeconds = Math.floor((Date.now() - start) / 1000);
+  localStorage.setItem("arg_completed_seconds", totalSeconds.toString());
 
   backgroundMusic.pause();
 
