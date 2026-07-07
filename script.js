@@ -203,7 +203,7 @@ keyRealInput.addEventListener("input", () => {
   const now = performance.now();
 
   // cooldown para evitar spam
-  if (now - lastKeySound > 40) {
+  if (now - lastKeySound > 20) {
     keySound.currentTime = 0;
     keySound.play().catch(() => {});
     lastKeySound = now;
