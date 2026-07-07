@@ -10,6 +10,8 @@ let backgroundMusic;
 let errorSound;
 let clickSound;
 let bootSound;
+let keySound;
+let accessSound;
 
 /* ELEMENTOS */
 const bootScreen = document.getElementById("boot-screen");
@@ -53,6 +55,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!r.ok) throw new Error(`config.json respondeu com estado ${r.status}`);
       return r.json();
     });
+
+    /* Sons */
+    backgroundMusic = new Audio(CONFIG.audio.background);
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = CONFIG.audio.volume;
+
+    errorSound = new Audio(CONFIG.audio.error);
+    clickSound = new Audio(CONFIG.audio.click);
+    bootSound = new Audio(CONFIG.audio.boot);
+
+    keySound = new Audio(CONFIG.audio.key);
+    keySound.volume = 0.5;
+
+    accessSound = new Audio(CONFIG.audio.access);
+    accessSound.volume = 0.7;
+
+    /* Aplicar tema ao CSS */
+    applyTheme(CONFIG.theme);
   } catch (err) {
     console.error("Falha ao carregar config.json:", err);
     document.body.innerHTML =
@@ -63,24 +83,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       '</div>';
     return;
   }
-
-  /* Sons */
-  backgroundMusic = new Audio(CONFIG.audio.background);
-  backgroundMusic.loop = true;
-  backgroundMusic.volume = CONFIG.audio.volume;
-
-  errorSound = new Audio(CONFIG.audio.error);
-  clickSound = new Audio(CONFIG.audio.click);
-  bootSound = new Audio(CONFIG.audio.boot);
-
-  keySound = new Audio(CONFIG.audio.key);
-  keySound.volume = 0.5;
-
-  accessSound = new Audio(CONFIG.audio.access);
-  accessSound.volume = 0.7;
-
-  /* Aplicar tema ao CSS */
-  applyTheme(CONFIG.theme);
 
   /* Timestamp de início persistente (para o UPTIME não reiniciar entre páginas) */
   getStartTime();
@@ -106,7 +108,6 @@ function applyTheme(theme) {
   root.style.setProperty("--green-faint", theme.colors.faint);
   root.style.setProperty("--amber-error", theme.colors.error);
 
-  /* CRT extras */
   if (!theme.crt.scanlines) {
     document.body.style.setProperty("--disable-scanlines", "true");
   }
