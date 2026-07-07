@@ -45,7 +45,27 @@
       const config = await fetch("../config.json").then(r => r.json());
       if (statusUser) statusUser.textContent = `USER : ${config.username}`;
       if (statusStatus) statusStatus.textContent = "STATUS : ONLINE";
-      if (statusTrack) statusTrack.textContent = `TRACK : ${config.track}`;
+      let trackName = config.track;
+
+      const page = window.location.pathname.split("/").pop();
+
+      switch (page) {
+        case "frg-3z9k.html":
+          trackName = "INTERTWINED";
+          break;
+
+        case "frg-6a73.html":
+          trackName = "NOME DA MÚSICA";
+          break;
+
+        case "frg-7q2m.html":
+          trackName = "OUTRA MÚSICA";
+          break;
+      }
+
+      if (statusTrack) {
+        statusTrack.textContent = `TRACK : ${trackName}`;
+      }
     } catch (e) {
       if (statusStatus) statusStatus.textContent = "STATUS : ONLINE";
     }
