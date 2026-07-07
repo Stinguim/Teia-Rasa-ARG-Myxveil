@@ -48,7 +48,21 @@ function getStartTime() {
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
-  CONFIG = await fetch("config.json").then(r => r.json());
+  try {
+    CONFIG = await fetch("config.json").then(r => {
+      if (!r.ok) throw new Error(`config.json respondeu com estado ${r.status}`);
+      return r.json();
+    });
+  } catch (err) {
+    console.error("Falha ao carregar config.json:", err);
+    document.body.innerHTML =
+      '<div style="color:#ff5555;font-family:monospace;padding:40px;">' +
+      'ERRO CRÍTICO: não foi possível carregar config.json.<br>' +
+      'Se estás a abrir este ficheiro diretamente (file://), ' +
+      'corre um servidor local (ex: <code>python3 -m http.server</code>) e tenta novamente.' +
+      '</div>';
+    return;
+  }
 
   /* Sons */
   backgroundMusic = new Audio(CONFIG.audio.background);
@@ -78,8 +92,44 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   promptLabel.textContent = "INSIRA A CHAVE DE ACESSO";
 
-  startBoot(CONFIG.username);
+  initOnboarding();
 });
+
+/* =========================================================
+   ONBOARDING — primeira visita
+========================================================= */
+
+function initOnboarding() {
+  const modal = document.getElementById("onboarding-modal");
+  const form = document.getElementById("onboarding-form");
+  const errorEl = document.getElementById("onboarding-error");
+
+  const saved = localStorage.getItem("arg_player");
+
+  if (saved) {
+    startBoot(CONFIG.username);
+    return;
+  }
+
+  modal.classList.remove("hidden");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const realName = document.getElementById("real-name").value.trim();
+    const username = document.getElementById("username").value.trim();
+
+    if (!realName || !username) {
+      errorEl.textContent = "Preenche os dois campos para continuar.";
+      return;
+    }
+
+    localStorage.setItem("arg_player", JSON.stringify({ realName, username }));
+
+    modal.classList.add("hidden");
+    startBoot(CONFIG.username);
+  });
+}
 
 /* =========================================================
    APLICAR TEMA AO CSS
