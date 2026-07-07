@@ -293,6 +293,12 @@ function setResponse(message, ok, key = "") {
     const readingBuffer = 1800; // tempo extra para ler a frase já completa
     setTimeout(() => fadeTo("locations/loc1.html"), typingTime + readingBuffer);
   }
+
+  if (key === "2A7RF") {
+    const typingTime = message.length * 42;
+    const readingBuffer = 1800;
+    setTimeout(() => fadeTo("locations/frg-7q2m.html"), typingTime + readingBuffer);
+  }
 }
 
 /* Escreve a mensagem de resposta letra a letra */

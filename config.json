@@ -114,6 +114,10 @@
         "ok": false,
         "message": "7UN4, ela e os seus animais. Mas não é a chave."
     },
+    "YU4I": {
+        "ok": false,
+        "message": "O teu próprio nome não é a chave..."
+    },
     "S38A5TIAN": {
         "ok": false,
         "message": "S38A5TIAN, o que vê tudo para além dos olhos. Mas não é a chave."
@@ -122,7 +126,7 @@
         "ok": false,
         "message": "S38A5TIAN, o que vê tudo para além dos olhos. Mas não é a chave."
     },
-    "Luna": {
+    "LUNA": {
         "ok": false,
         "message": "7UN4, ela e os seus animais. Mas não é a chave."
     },
@@ -139,12 +143,24 @@
       "message": "Correto! Continuando protocolo de recuperação."
     },
     "BSOD": {
-      "ok": true,
+      "ok": false,
       "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
     },
     "GAY": {
-      "ok": true,
+      "ok": false,
       "message": "S38A5TIAN, este é o tablet do Yu4i não o teu. Mas não é a chave."
+    },
+    "FODASSE": {
+      "ok": false,
+      "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
+    },
+    "MERDA": {
+      "ok": false,
+      "message": "Yu4i, estás bem? Não és assim...Mas não é a chave."
+    },
+    "ARCANA": {
+      "ok": false,
+      "message": "Uma história de fantasia? Não é a chave."
     }
   }
 }
