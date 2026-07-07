@@ -184,6 +184,10 @@
       "ok": false,
       "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
     },
+    "CHAVE": {
+      "ok": false,
+      "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
+    },
     "PROTOCOLO DE RECUPERAÇÃO": {
       "ok": false,
       "message": "'Remember This', mas acho estranho não te lembrares."
