@@ -340,7 +340,7 @@ function setResponse(message, ok, key = "") {
     setTimeout(() => fadeTo("locations/frg-3z9k.html"), typingTime + readingBuffer);
   }
 
-  if (key === "2A7RFSNLY8652PROMESSA") {
+  if (key === "2A7RFSNLY8652PROMESSAS") {
     const typingTime = message.length * 42;
     const readingBuffer = 1800;
     setTimeout(() => triggerFinalSequence(), typingTime + readingBuffer);
