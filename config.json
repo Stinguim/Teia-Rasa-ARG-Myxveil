@@ -164,6 +164,10 @@
       "ok": false,
       "message": "Sim, temos uma promessa e esperarei o tempo necessário. Mas não é a chave."
     },
+    "PROMESSAS": {
+      "ok": false,
+      "message": "Sim, temos uma promessa e esperarei o tempo necessário. Mas não é a chave."
+    },
     "PURGA": {
       "ok": false,
       "message": "Estou com medo...Não sei se consigo sobreviver...Mas não é a chave."
