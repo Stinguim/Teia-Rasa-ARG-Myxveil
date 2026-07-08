@@ -212,6 +212,18 @@
       "ok": false,
       "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
     },
+    "IPE": {
+      "ok": false,
+      "message": "Uhh porque é que essa empresa seria a chave? Especialmente se é a IPE."
+    },
+    "TEIA RASA": {
+      "ok": false,
+      "message": "Sim a nossa empresa. Mas não é a chave."
+    },
+    "TEIA-RASA": {
+      "ok": false,
+      "message": "Sim a nossa empresa. Mas não é a chave."
+    },
     "CHAVE DE ACESSO": {
       "ok": false,
       "message": "Não é a chave. Esqueceste da password, lembra-te do protocolo de recuperação."
