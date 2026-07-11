@@ -256,6 +256,10 @@
       "ok": false,
       "message": "Tua comida favorita. Mas não é a chave."
     },
+    "CAFÉ": {
+      "ok": false,
+      "message": "Tua comida favorita. Mas não é a chave."
+    },
     "AKI": {
       "ok": false,
       "message": "Muitos chamam Heroi, outros vilão de Arcana. Mas não é a chave."
@@ -274,9 +278,13 @@
     },
     "DESCAFEINADO": {
       "ok": false,
-      "message": "Algo que te afetaSupostamente só gostavas de café. Mas não é a chave."
+      "message": "Supostamente só gostavas de café. Mas não é a chave."
     },
     "DRAGOES": {
+      "ok": false,
+      "message": "Os dragões que falaste da 7u4a? Mas não é a chave."
+    },
+    "DRAGÕES": {
       "ok": false,
       "message": "Os dragões que falaste da 7u4a? Mas não é a chave."
     },
@@ -361,6 +369,10 @@
       "message": "Isso é um elemento paranormal. Não é a chave."
     },
     "COSMICO": {
+      "ok": false,
+      "message": "Espaço é tão bonito da forma que me descreves. Não é a chave."
+    },
+    "CÓSMICO": {
       "ok": false,
       "message": "Espaço é tão bonito da forma que me descreves. Não é a chave."
     },
