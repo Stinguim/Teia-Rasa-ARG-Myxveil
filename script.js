@@ -125,18 +125,59 @@ function startBoot(username) {
 
   const lines = [...CONFIG.boot.lines, `Utilizador reconhecido: ${username}`];
   let i = 0;
+  let skipped = false;
+
+  const jaViuBoot = localStorage.getItem("arg_boot_seen") === "true";
+
+  function terminarBootImediatamente() {
+    if (skipped) return;
+    skipped = true;
+    bootSound.pause();
+    bootLinesEl.textContent = lines.join("\n");
+    hideSkipButton();
+    showProceedButton();
+  }
+
+  // Só oferece o botão de saltar a quem já viu o arranque pelo menos uma vez
+  if (jaViuBoot) {
+    showSkipButton(terminarBootImediatamente);
+  }
 
   function nextLine() {
+    if (skipped) return;
+
     if (i < lines.length) {
       appendBootLine(lines[i]);
       i++;
       setTimeout(nextLine, 90 + Math.random() * 160);
     } else {
+      localStorage.setItem("arg_boot_seen", "true");
+      hideSkipButton();
       setTimeout(showProceedButton, 600);
     }
   }
 
   nextLine();
+}
+
+/* Botão SALTAR ARRANQUE — só aparece a quem já viu a sequência antes */
+function showSkipButton(onSkip) {
+  const btn = document.createElement("button");
+  btn.textContent = "SALTAR ARRANQUE";
+  btn.className = "boot-skip-btn";
+  btn.id = "boot-skip-btn";
+
+  btn.addEventListener("click", () => {
+    clickSound.play().catch(() => {});
+    onSkip();
+  });
+
+  bootScreen.appendChild(btn);
+}
+
+function hideSkipButton() {
+  const btn = document.getElementById("boot-skip-btn");
+  if (btn) btn.remove();
 }
 
 /* Scroll inteligente */
